@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="sfml-widgets" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="sfml-widgets" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="sfml-widgets" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="src/Gui/Button.cpp" />
+		<Unit filename="src/Gui/Button.hpp" />
+		<Unit filename="src/Gui/CheckBox.cpp" />
+		<Unit filename="src/Gui/CheckBox.hpp" />
+		<Unit filename="src/Gui/ComboBox.hpp" />
+		<Unit filename="src/Gui/ComboBox.inl" />
+		<Unit filename="src/Gui/Gui.hpp" />
+		<Unit filename="src/Gui/Image.cpp" />
+		<Unit filename="src/Gui/Image.hpp" />
+		<Unit filename="src/Gui/Label.cpp" />
+		<Unit filename="src/Gui/Label.hpp" />
+		<Unit filename="src/Gui/Layouts/FormLayout.cpp" />
+		<Unit filename="src/Gui/Layouts/FormLayout.hpp" />
+		<Unit filename="src/Gui/Layouts/HBoxLayout.cpp" />
+		<Unit filename="src/Gui/Layouts/HBoxLayout.hpp" />
+		<Unit filename="src/Gui/Layouts/Layout.cpp" />
+		<Unit filename="src/Gui/Layouts/Layout.hpp" />
+		<Unit filename="src/Gui/Layouts/VBoxLayout.cpp" />
+		<Unit filename="src/Gui/Layouts/VBoxLayout.hpp" />
+		<Unit filename="src/Gui/Menu.cpp" />
+		<Unit filename="src/Gui/Menu.hpp" />
+		<Unit filename="src/Gui/OptionsBox.hpp" />
+		<Unit filename="src/Gui/OptionsBox.inl" />
+		<Unit filename="src/Gui/ProgressBar.cpp" />
+		<Unit filename="src/Gui/ProgressBar.hpp" />
+		<Unit filename="src/Gui/Slider.cpp" />
+		<Unit filename="src/Gui/Slider.hpp" />
+		<Unit filename="src/Gui/SpriteButton.cpp" />
+		<Unit filename="src/Gui/SpriteButton.hpp" />
+		<Unit filename="src/Gui/TextBox.cpp" />
+		<Unit filename="src/Gui/TextBox.hpp" />
+		<Unit filename="src/Gui/Theme.cpp" />
+		<Unit filename="src/Gui/Theme.hpp" />
+		<Unit filename="src/Gui/Utils/Arrow.cpp" />
+		<Unit filename="src/Gui/Utils/Arrow.hpp" />
+		<Unit filename="src/Gui/Utils/Box.cpp" />
+		<Unit filename="src/Gui/Utils/Box.hpp" />
+		<Unit filename="src/Gui/Utils/Cross.cpp" />
+		<Unit filename="src/Gui/Utils/Cross.hpp" />
+		<Unit filename="src/Gui/Utils/ItemBox.hpp" />
+		<Unit filename="src/Gui/Utils/ItemBox.inl" />
+		<Unit filename="src/Gui/Widget.cpp" />
+		<Unit filename="src/Gui/Widget.hpp" />
+		<Unit filename="src/demo.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
