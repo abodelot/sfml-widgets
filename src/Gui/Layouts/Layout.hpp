@@ -64,9 +64,10 @@ protected:
 private:
 	/**
 	 * Give the focus to a widget, if applicable
+	 * @param state: new state of the widget if it took focus
 	 * @return true if widget took the focus, otherwise false
 	 */
-	bool focusWidget(Widget* widget);
+	bool focusWidget(Widget* widget, State state = StateFocused);
 
 	Widget*   m_first;
 	Widget*   m_last;

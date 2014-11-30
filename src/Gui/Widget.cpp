@@ -100,7 +100,7 @@ bool Widget::isSelectable() const
 
 bool Widget::isFocused() const
 {
-	return m_state == StateFocused;
+	return m_state == StateFocused || m_state == StatePressed;
 }
 
 

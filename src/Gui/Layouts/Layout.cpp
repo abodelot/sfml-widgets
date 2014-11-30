@@ -163,9 +163,8 @@ void Layout::onMousePressed(float x, float y)
 {
 	if (m_hover != NULL)
 	{
-		// Clicked widget takes focus
-		if (m_focus != m_hover)
-			focusWidget(m_hover);
+		// Clicked widget takes focus with a 'Pressed' state
+		focusWidget(m_hover, StatePressed);
 
 		// Send event to widget
 		sf::Vector2f mouse = sf::Vector2f(x, y) - m_hover->getPosition();
@@ -249,20 +248,21 @@ void Layout::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 
-bool Layout::focusWidget(Widget* widget)
+bool Layout::focusWidget(Widget* widget, State state)
 {
 	if (widget != NULL)
 	{
-		if (m_focus != NULL)
+		// If another widget was already focused, remove focus
+		if (m_focus != NULL && m_focus != widget)
 		{
 			m_focus->setState(StateDefault);
 			m_focus = NULL;
 		}
-
+		// Apply focus to widget
 		if (widget->isSelectable())
 		{
 			m_focus = widget;
-			widget->setState(StatePressed);
+			widget->setState(state);
 			return true;
 		}
 	}

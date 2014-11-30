@@ -1,0 +1,7 @@
+# Compilation files
+*.o
+sfml-widgets
+
+# Code::Blocks
+sfml-widgets.layout
+sfml-widgets.depend

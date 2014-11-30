@@ -199,7 +199,6 @@ void Slider::onStateChanged(State state)
 {
 	if (state == StateFocused || state == StateDefault)
 	{
-
 		m_handle.applyState(state);
 	}
 }

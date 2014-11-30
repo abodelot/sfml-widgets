@@ -59,15 +59,8 @@ void Button::onMouseMoved(float x, float y)
 }
 
 
-void Button::onMousePressed(float, float)
-{
-	m_box.press();
-}
-
-
 void Button::onMouseReleased(float x, float y)
 {
-	m_box.release();
 	if (containsPoint({x, y}))
 	{
 		triggerCallback();
