@@ -1,6 +1,8 @@
+# Demo binary
+sfml-widgets-demo
+
 # Compilation files
 *.o
-sfml-widgets
 
 # Code::Blocks
 sfml-widgets.layout
