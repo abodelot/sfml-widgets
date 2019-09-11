@@ -25,8 +25,8 @@ public:
 	/**
 	 * Label's color
 	 */
-	void setColor(const sf::Color& color);
-	const sf::Color& getColor() const;
+	void setFillColor(const sf::Color& color);
+	const sf::Color& getFillColor() const;
 
 	void setTextSize(size_t size);
 	size_t getTextSize() const;

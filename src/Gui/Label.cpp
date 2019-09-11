@@ -8,7 +8,7 @@ Label::Label(const sf::String& string)
 {
 	m_text.setFont(Theme::getFont());
 	m_text.setPosition(Theme::PADDING, Theme::PADDING);
-	m_text.setColor(Theme::click.textColor);
+	m_text.setFillColor(Theme::click.textColor);
 	m_text.setCharacterSize(Theme::textSize);
 	setSelectable(false);
 	setText(string);
@@ -28,15 +28,15 @@ const sf::String& Label::getText() const
 }
 
 
-void Label::setColor(const sf::Color& color)
+void Label::setFillColor(const sf::Color& color)
 {
-	m_text.setColor(color);
+	m_text.setFillColor(color);
 }
 
 
-const sf::Color& Label::getColor() const
+const sf::Color& Label::getFillColor() const
 {
-	return m_text.getColor();
+	return m_text.getFillColor();
 }
 
 

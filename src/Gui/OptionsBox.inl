@@ -30,7 +30,7 @@ OptionsBox<T>::OptionsBox():
 
 
 template <class T>
-void OptionsBox<T>::addItem(const sf::String& label, const T& value, bool select)
+void OptionsBox<T>::addItem(const sf::String& label, const T& value)
 {
 	m_items.push_back(Item(label, value));
 

@@ -17,7 +17,7 @@ Arrow::Arrow(Direction direction):
 }
 
 
-void Arrow::setColor(const sf::Color& color)
+void Arrow::setFillColor(const sf::Color& color)
 {
 	for (int i = 0; i < 4; ++i)
 		m_vertices[i].color = color;

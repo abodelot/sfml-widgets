@@ -26,14 +26,14 @@ void ItemBox<T>::applyState(State state)
 	switch (state)
 	{
 		case StateDefault:
-			m_item.setColor(m_type == Click ? Theme::click.textColor : Theme::input.textColor);
+			m_item.setFillColor(m_type == Click ? Theme::click.textColor : Theme::input.textColor);
 			break;
 		case StateHovered:
-			m_item.setColor(m_type == Click ? Theme::click.textColorHover : Theme::input.textColorHover);
+			m_item.setFillColor(m_type == Click ? Theme::click.textColorHover : Theme::input.textColorHover);
 			break;
 		case StatePressed:
 		case StateFocused:
-			m_item.setColor(m_type == Click ? Theme::click.textColorFocus : Theme::input.textColorFocus);
+			m_item.setFillColor(m_type == Click ? Theme::click.textColorFocus : Theme::input.textColorFocus);
 			break;
 
 	}

@@ -12,7 +12,7 @@ ProgressBar::ProgressBar(float width):
 {
 	m_box.setSize(width, Theme::getBoxHeight());
 	m_text.setFont(Theme::getFont());
-	m_text.setColor(Theme::input.textColor);
+	m_text.setFillColor(Theme::input.textColor);
 	m_text.setCharacterSize(Theme::textSize);
 
 	// Build bar

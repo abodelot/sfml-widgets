@@ -183,7 +183,7 @@ void Slider::onMouseMoved(float x, float y)
 }
 
 
-void Slider::onMouseReleased(float x, float y)
+void Slider::onMouseReleased(float, float)
 {
 	m_handle.release();
 }

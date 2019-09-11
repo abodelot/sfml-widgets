@@ -13,7 +13,7 @@ public:
 
 	Arrow(Direction direction);
 
-	void setColor(const sf::Color& color);
+	void setFillColor(const sf::Color& color);
 
 	void move(float dx, float dy);
 	void setPosition(float x, float y);

@@ -23,7 +23,7 @@ public:
 	 * @param label: displayed label when selected
 	 * @param value: value associated
 	 */
-	void addItem(const sf::String& label, const T& value, bool select = false);
+	void addItem(const sf::String& label, const T& value);
 
 	/**
 	 * Make an item the current one

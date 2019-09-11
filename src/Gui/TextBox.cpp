@@ -18,7 +18,7 @@ TextBox::TextBox(float width):
 	int offset = Theme::borderSize + Theme::PADDING;
 	m_text.setFont(Theme::getFont());
 	m_text.setPosition(offset, offset);
-	m_text.setColor(Theme::input.textColor);
+	m_text.setFillColor(Theme::input.textColor);
 	m_text.setCharacterSize(Theme::textSize);
 
 	// Build cursor
@@ -149,7 +149,7 @@ void TextBox::onKeyPressed(sf::Keyboard::Key key)
 }
 
 
-void TextBox::onMousePressed(float x, float y)
+void TextBox::onMousePressed(float x, float)
 {
 	for (int i = m_text.getString().getSize(); i >= 0; --i)
 	{

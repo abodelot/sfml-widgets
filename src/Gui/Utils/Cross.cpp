@@ -32,7 +32,7 @@ void Cross::move(float dx, float dy)
 }
 
 
-void Cross::setSize(float size)
+void Cross::setSize(float)
 {
 
 }

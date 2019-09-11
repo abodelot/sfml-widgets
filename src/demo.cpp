@@ -149,7 +149,7 @@ int main()
 					text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
 					break;
 				case C_COLOR:
-					text.setColor(opt->getSelectedValue());
+					text.setFillColor(opt->getSelectedValue());
 					break;
 				case C_ROTATION:
 					text.setRotation(sliderRotation->getValue() * 360 / 100.f);
