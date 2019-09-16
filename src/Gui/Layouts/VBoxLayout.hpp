@@ -12,13 +12,12 @@ namespace gui
 class VBoxLayout: public Layout
 {
 public:
-	Widget* add(Widget* widget, int id = -1) override;
+    Widget* add(Widget* widget, int id = -1) override;
 
 private:
-	void recomputeGeometry() override;
+    void recomputeGeometry() override;
 };
 
 }
-
 
 #endif // GUI_VBOXLAYOUT_HPP

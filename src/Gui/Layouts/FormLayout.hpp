@@ -12,23 +12,22 @@ namespace gui
 class FormLayout: public Layout
 {
 public:
-	FormLayout();
+    FormLayout();
 
-	Widget* add(Widget* widget, int id = -1) override;
+    Widget* add(Widget* widget, int id = -1) override;
 
-	/**
-	 * @param label: label displayed before the widget
-	 * @param widget: widget to be added
-	 */
-	Widget* addRow(const sf::String& label, Widget* widget, int id = -1);
+    /**
+     * @param label: label displayed before the widget
+     * @param widget: widget to be added
+     */
+    Widget* addRow(const sf::String& label, Widget* widget, int id = -1);
 
 private:
-	void recomputeGeometry() override;
+    void recomputeGeometry() override;
 
-	float m_labelWidth;
+    float m_labelWidth;
 };
 
 }
-
 
 #endif // GUI_FORMLAYOUT_HPP

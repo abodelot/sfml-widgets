@@ -14,19 +14,19 @@ namespace gui
 class ProgressBar: public Widget
 {
 public:
-	ProgressBar(float width = 200.f);
+    ProgressBar(float width = 200.f);
 
-	/// [0..100]
-	void setValue(float value);
-	float getValue() const;
+    /// [0..100]
+    void setValue(float value);
+    float getValue() const;
 
 private:
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	Box        m_box;
-	sf::Vertex m_bar[4];
-	sf::Text   m_text;
-	float      m_value;
+    Box        m_box;
+    sf::Vertex m_bar[4];
+    sf::Text   m_text;
+    float      m_value;
 };
 
 }

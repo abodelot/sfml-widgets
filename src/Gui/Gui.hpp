@@ -19,4 +19,3 @@
 #include "Layouts/VBoxLayout.hpp"
 
 #endif // GUI_GUI_HPP
-

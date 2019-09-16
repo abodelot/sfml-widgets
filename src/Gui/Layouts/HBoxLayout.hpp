@@ -12,13 +12,12 @@ namespace gui
 class HBoxLayout: public Layout
 {
 public:
-	Widget* add(Widget* widget, int id = -1) override;
+    Widget* add(Widget* widget, int id = -1) override;
 
 protected:
-	void recomputeGeometry() override;
+    void recomputeGeometry() override;
 };
 
 }
-
 
 #endif // GUI_HBOXLAYOUT_HPP

@@ -14,87 +14,87 @@ namespace gui
 class Box: public sf::Drawable
 {
 public:
-	enum Type
-	{
-		Input,
-		Click
-	};
+    enum Type
+    {
+        Input,
+        Click
+    };
 
-	Box(Type type = Click);
+    Box(Type type = Click);
 
-	/**
-	 * Get box position
-	 */
-	const sf::Vector2f& getPosition() const;
+    /**
+     * Get box position
+     */
+    const sf::Vector2f& getPosition() const;
 
-	void setPosition(float x, float y);
+    void setPosition(float x, float y);
 
-	/**
-	 * Set the box dimensions
-	 */
-	void setSize(float width, float height);
+    /**
+     * Set the box dimensions
+     */
+    void setSize(float width, float height);
 
-	/**
-	 * Get box dimensions
-	 */
-	sf::Vector2f getSize() const;
+    /**
+     * Get box dimensions
+     */
+    sf::Vector2f getSize() const;
 
-	void press();
+    void press();
 
-	void release();
+    void release();
 
-	/**
-	 * @return true if point is inside the box limits
-	 */
-	bool containsPoint(float x, float y) const;
+    /**
+     * @return true if point is inside the box limits
+     */
+    bool containsPoint(float x, float y) const;
 
-	void applyState(State state);
+    void applyState(State state);
 
-	template <class T>
-	void centerItem(T& item)
-	{
-		sf::Vector2f size = getSize();
-		sf::Vector2f item_size = item.getSize();
-		// Center item
-		item.setPosition(int(getPosition().x + (size.x - item_size.x) / 2),
-	                     int(getPosition().y + (size.y - item_size.y) / 2));
-	}
+    template <class T>
+    void centerItem(T& item)
+    {
+        sf::Vector2f size = getSize();
+        sf::Vector2f item_size = item.getSize();
+        // Center item
+        item.setPosition(int(getPosition().x + (size.x - item_size.x) / 2),
+                         int(getPosition().y + (size.y - item_size.y) / 2));
+    }
 
-	void centerText(sf::Text& item);
+    void centerText(sf::Text& item);
 
 
 protected:
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	virtual void onPress() {};
-	virtual void onRelease() {};
+    virtual void onPress() {};
+    virtual void onRelease() {};
 
-	Type m_type;
+    Type m_type;
 private:
-	enum
-	{
-		TOP_LEFT,
-		TOP,
-		TOP_RIGHT,
-		LEFT,
-		MIDDLE,
-		RIGHT,
-		BOTTOM_LEFT,
-		BOTTOM,
-		BOTTOM_RIGHT
-	};
+    enum
+    {
+        TOP_LEFT,
+        TOP,
+        TOP_RIGHT,
+        LEFT,
+        MIDDLE,
+        RIGHT,
+        BOTTOM_LEFT,
+        BOTTOM,
+        BOTTOM_RIGHT
+    };
 
-	void setTextureCoords(int index, float x, float y);
+    void setTextureCoords(int index, float x, float y);
 
-	void setTexturePos(int index, float x, float y, float w, float h);
+    void setTexturePos(int index, float x, float y, float w, float h);
 
-	//void setBodyColor(const sf::Color& color);
+    //void setBodyColor(const sf::Color& color);
 
-	//void setBorderColor(const sf::Color&, const sf::Color&);
+    //void setBorderColor(const sf::Color&, const sf::Color&);
 
-	State m_state;
-	static const size_t VERTEX_COUNT = 9 * 4;
-	sf::Vertex m_vertices[VERTEX_COUNT];
+    State m_state;
+    static const size_t VERTEX_COUNT = 9 * 4;
+    sf::Vertex m_vertices[VERTEX_COUNT];
 };
 
 

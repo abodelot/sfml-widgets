@@ -13,20 +13,20 @@ template <class T>
 class ItemBox: public Box
 {
 public:
-	ItemBox(Box::Type type = Box::Click);
-	ItemBox(const T& item, Box::Type type = Box::Click);
+    ItemBox(Box::Type type = Box::Click);
+    ItemBox(const T& item, Box::Type type = Box::Click);
 
-	void applyState(State state);
+    void applyState(State state);
 
-	inline T& item() { return m_item;} //hack
-	inline const T& item() const { return m_item;}
+    inline T& item() { return m_item;} //hack
+    inline const T& item() const { return m_item;}
 
 private:
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	void onPress() override;
-	void onRelease() override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void onPress() override;
+    void onRelease() override;
 
-	T    m_item;
+    T    m_item;
 };
 
 }
