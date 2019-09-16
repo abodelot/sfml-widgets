@@ -130,9 +130,9 @@ void Slider::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 // callbacks ------------------------------------------------------------------
 
-void Slider::onKeyPressed(sf::Keyboard::Key key)
+void Slider::onKeyPressed(const sf::Event::KeyEvent& key)
 {
-    switch (key)
+    switch (key.code)
     {
     case sf::Keyboard::Left:
         setValue(m_value - m_quantum);

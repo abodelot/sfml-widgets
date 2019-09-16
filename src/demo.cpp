@@ -38,7 +38,7 @@ int main()
     };
 
     // Create the main window
-    sf::RenderWindow app(sf::VideoMode(640, 480), "SFML Widgets");
+    sf::RenderWindow app(sf::VideoMode(640, 480), "SFML Widgets", sf::Style::Close);
 
     gui::Menu menu(app);
     menu.setPosition(10, 10);
@@ -60,8 +60,13 @@ int main()
 
     // Textbox
     gui::TextBox* textbox = new gui::TextBox();
-    textbox->setText("Hello, World!");
+    textbox->setText("Hello world!");
     form->addRow("Text", textbox, C_TEXT);
+
+    gui::TextBox* textbox2 = new gui::TextBox();
+    textbox2->setText("Hello world!");
+    textbox2->setMaxLength(5);
+    form->addRow("Text with limit (5)", textbox2);
 
     // Slider for rotation
     gui::Slider* sliderRotation = new gui::Slider();
@@ -107,9 +112,9 @@ int main()
 
     // Textbox
     gui::HBoxLayout* hbox2 = vbox->addHBoxLayout();
-    gui::TextBox* textbox2 = new gui::TextBox(100);
-    textbox2->setText("Button name");
-    hbox2->add(textbox2, C_NEW_BUTTON);
+    gui::TextBox* textbox3 = new gui::TextBox(100);
+    textbox3->setText("Button name");
+    hbox2->add(textbox3, C_NEW_BUTTON);
     hbox2->addButton("Create button", C_NEW_BUTTON);
 
     // Small progress bar

@@ -25,7 +25,7 @@ public:
 
     void onStateChanged(State state) override;
     void onMouseReleased(float x, float y) override;
-    void onKeyPressed(sf::Keyboard::Key key) override;
+    void onKeyPressed(const sf::Event::KeyEvent& key) override;
 
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

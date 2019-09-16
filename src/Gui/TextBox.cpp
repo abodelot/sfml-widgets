@@ -10,8 +10,8 @@ namespace gui
 
 TextBox::TextBox(float width):
     m_box(Box::Input),
-    m_cursor_pos(0),
-    m_max_length(-1)
+    m_cursorPos(0),
+    m_maxLength(256)
 {
     m_box.setSize(width, Theme::getBoxHeight());
 
@@ -33,8 +33,16 @@ TextBox::TextBox(float width):
 
 void TextBox::setText(const sf::String& string)
 {
-    m_text.setString(string);
-    setCursor(string.getSize());
+    // Trim current text if needed
+    if (string.getSize() > m_maxLength)
+    {
+        m_text.setString(string.substring(0, m_maxLength));
+    }
+    else
+    {
+        m_text.setString(string);
+    }
+    setCursor(getText().getSize());
 }
 
 
@@ -44,15 +52,26 @@ const sf::String& TextBox::getText() const
 }
 
 
+void TextBox::setMaxLength(size_t maxLength)
+{
+    m_maxLength = maxLength;
+    // Trim current text if needed
+    if (m_text.getString().getSize() > m_maxLength)
+    {
+        m_text.setString(m_text.getString().substring(0, m_maxLength));
+    }
+}
+
+
 void TextBox::setCursor(size_t index)
 {
     if (index <= m_text.getString().getSize())
     {
-        m_cursor_pos = index;
+        m_cursorPos = index;
 
         float padding = Theme::borderSize + Theme::PADDING;
         m_cursor.setPosition(m_text.findCharacterPos(index).x, padding);
-        m_cursor_timer.restart();
+        m_cursorTimer.restart();
 
         if (m_cursor.getPosition().x > getSize().x - padding)
         {
@@ -90,43 +109,43 @@ void TextBox::setCursor(size_t index)
 
 size_t TextBox::getCursor() const
 {
-    return m_cursor_pos;
+    return m_cursorPos;
 }
 
 
-void TextBox::onKeyPressed(sf::Keyboard::Key key)
+void TextBox::onKeyPressed(const sf::Event::KeyEvent& key)
 {
-    switch (key)
+    switch (key.code)
     {
     case sf::Keyboard::Left:
-        setCursor(m_cursor_pos - 1);
+        setCursor(m_cursorPos - 1);
         break;
 
     case sf::Keyboard::Right:
-        setCursor(m_cursor_pos + 1);
+        setCursor(m_cursorPos + 1);
         break;
 
     case sf::Keyboard::BackSpace:
         // Erase character before cursor
-        if (m_cursor_pos > 0)
+        if (m_cursorPos > 0)
         {
             sf::String string = m_text.getString();
-            string.erase(m_cursor_pos - 1);
+            string.erase(m_cursorPos - 1);
             m_text.setString(string);
 
-            setCursor(m_cursor_pos - 1);
+            setCursor(m_cursorPos - 1);
         }
         break;
 
     case sf::Keyboard::Delete:
         // Erase character after cursor
-        if (m_cursor_pos < m_text.getString().getSize())
+        if (m_cursorPos < m_text.getString().getSize())
         {
             sf::String string = m_text.getString();
-            string.erase(m_cursor_pos);
+            string.erase(m_cursorPos);
             m_text.setString(string);
 
-            setCursor(m_cursor_pos);
+            setCursor(m_cursorPos);
         }
         break;
 
@@ -140,6 +159,24 @@ void TextBox::onKeyPressed(sf::Keyboard::Key key)
 
     case sf::Keyboard::Return:
         triggerCallback();
+        break;
+
+    // Ctrl+V: paste clipboard
+    case sf::Keyboard::V:
+        if (key.control)
+        {
+            sf::String string = m_text.getString();
+            sf::String clipboardString = sf::Clipboard::getString();
+            // Trim clipboard content if needed
+            if ((string.getSize() + clipboardString.getSize()) > m_maxLength)
+            {
+                clipboardString = clipboardString.substring(0, m_maxLength - string.getSize());
+            }
+            // Insert string at cursor position
+            string.insert(m_cursorPos, clipboardString);
+            m_text.setString(string);
+            setCursor(m_cursorPos + clipboardString.getSize());
+        }
         break;
 
     default:
@@ -168,13 +205,12 @@ void TextBox::onTextEntered(sf::Uint32 unicode)
     if (unicode > 30 && (unicode < 127 || unicode > 159))
     {
         sf::String string = m_text.getString();
-        if (m_max_length == -1 || (int) string.getSize() < m_max_length)
+        if (string.getSize() < m_maxLength)
         {
             // Insert character in string at cursor position
-            string.insert(m_cursor_pos, unicode);
+            string.insert(m_cursorPos, unicode);
             m_text.setString(string);
-
-            setCursor(m_cursor_pos + 1);
+            setCursor(m_cursorPos + 1);
         }
     }
 }
@@ -203,9 +239,9 @@ void TextBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
     if (isFocused())
     {
         // Make it blink
-        float timer = m_cursor_timer.getElapsedTime().asSeconds();
+        float timer = m_cursorTimer.getElapsedTime().asSeconds();
         if (timer >= BLINK_PERIOD)
-            m_cursor_timer.restart();
+            m_cursorTimer.restart();
 
         // Updating in the drawing method, deal with it
         sf::Color color = Theme::input.textColor;

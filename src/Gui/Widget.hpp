@@ -66,8 +66,8 @@ public:
     virtual void onMousePressed(float x, float y);
     virtual void onMouseReleased(float x, float y);
     virtual void onMouseWheelMoved(int delta);
-    virtual void onKeyPressed(sf::Keyboard::Key key);
-    virtual void onKeyReleased(sf::Keyboard::Key key);
+    virtual void onKeyPressed(const sf::Event::KeyEvent& key);
+    virtual void onKeyReleased(const sf::Event::KeyEvent& key);
     virtual void onTextEntered(sf::Uint32 unicode);
 
 protected:

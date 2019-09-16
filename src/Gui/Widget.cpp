@@ -157,8 +157,8 @@ void Widget::onMouseMoved(float, float) {}
 void Widget::onMousePressed(float, float) {}
 void Widget::onMouseReleased(float, float) {}
 void Widget::onMouseWheelMoved(int) {}
-void Widget::onKeyPressed(sf::Keyboard::Key) {}
-void Widget::onKeyReleased(sf::Keyboard::Key) {}
+void Widget::onKeyPressed(const sf::Event::KeyEvent&) {}
+void Widget::onKeyReleased(const sf::Event::KeyEvent&) {}
 void Widget::onTextEntered(sf::Uint32) {}
 
 }

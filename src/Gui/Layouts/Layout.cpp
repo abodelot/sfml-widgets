@@ -200,15 +200,15 @@ void Layout::onMouseWheelMoved(int delta)
 }
 
 
-void Layout::onKeyPressed(sf::Keyboard::Key key)
+void Layout::onKeyPressed(const sf::Event::KeyEvent& key)
 {
-    if (key == Theme::nextWidgetKey)
+    if (key.code == Theme::nextWidgetKey)
     {
         if (!focusNextWidget())
             // Try to focus first widget if possible
             focusNextWidget();
     }
-    else if (key == Theme::previousWidgetKey)
+    else if (key.code == Theme::previousWidgetKey)
     {
         if (!focusPreviousWidget())
             focusPreviousWidget();
@@ -220,7 +220,7 @@ void Layout::onKeyPressed(sf::Keyboard::Key key)
 }
 
 
-void Layout::onKeyReleased(sf::Keyboard::Key key)
+void Layout::onKeyReleased(const sf::Event::KeyEvent& key)
 {
     if (m_focus != NULL)
     {

@@ -68,9 +68,9 @@ void Button::onMouseReleased(float x, float y)
 }
 
 
-void Button::onKeyPressed(sf::Keyboard::Key key)
+void Button::onKeyPressed(const sf::Event::KeyEvent& key)
 {
-    if (key == sf::Keyboard::Return)
+    if (key.code == sf::Keyboard::Return)
     {
         triggerCallback();
         m_box.press();
@@ -78,9 +78,9 @@ void Button::onKeyPressed(sf::Keyboard::Key key)
 }
 
 
-void Button::onKeyReleased(sf::Keyboard::Key key)
+void Button::onKeyReleased(const sf::Event::KeyEvent& key)
 {
-    if (key == sf::Keyboard::Return)
+    if (key.code == sf::Keyboard::Return)
     {
         m_box.release();
     }

@@ -43,11 +43,11 @@ int Menu::onEvent(const sf::Event& event)
         break;
 
     case sf::Event::KeyPressed:
-        onKeyPressed(event.key.code);
+        onKeyPressed(event.key);
         break;
 
     case sf::Event::KeyReleased:
-        onKeyReleased(event.key.code);
+        onKeyReleased(event.key);
         break;
 
     case sf::Event::TextEntered:

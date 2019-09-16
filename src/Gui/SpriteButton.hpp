@@ -28,8 +28,8 @@ public:
     void onMouseMoved(float x, float y) override;
     void onMousePressed(float x, float y) override;
     void onMouseReleased(float x, float y) override;
-    void onKeyPressed(sf::Keyboard::Key key) override;
-    void onKeyReleased(sf::Keyboard::Key key) override;
+    void onKeyPressed(const sf::Event::KeyEvent& key) override;
+    void onKeyReleased(const sf::Event::KeyEvent& key) override;
 
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

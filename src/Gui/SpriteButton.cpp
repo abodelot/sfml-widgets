@@ -114,9 +114,9 @@ void SpriteButton::onMouseReleased(float x, float y)
 }
 
 
-void SpriteButton::onKeyPressed(sf::Keyboard::Key key)
+void SpriteButton::onKeyPressed(const sf::Event::KeyEvent& key)
 {
-    if (key == sf::Keyboard::Return)
+    if (key.code == sf::Keyboard::Return)
     {
         triggerCallback();
         press();
@@ -124,9 +124,9 @@ void SpriteButton::onKeyPressed(sf::Keyboard::Key key)
 }
 
 
-void SpriteButton::onKeyReleased(sf::Keyboard::Key key)
+void SpriteButton::onKeyReleased(const sf::Event::KeyEvent& key)
 {
-    if (key == sf::Keyboard::Return)
+    if (key.code == sf::Keyboard::Return)
         release();
 }
 

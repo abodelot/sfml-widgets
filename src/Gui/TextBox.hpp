@@ -17,14 +17,19 @@ public:
     TextBox(float width = 200.f);
 
     /**
-     *
+     * Define textbox content
      */
     void setText(const sf::String& string);
 
     /**
-     *
+     * Get textbox content
      */
     const sf::String& getText() const;
+
+    /**
+     * Define max length of textbox content (default is 256 characters)
+     */
+    void setMaxLength(size_t maxLength);
 
     /**
       Set the cursor position
@@ -38,10 +43,10 @@ public:
 
 protected:
     // Callbacks
-    void onKeyPressed(sf::Keyboard::Key key);
-    void onMousePressed(float x, float y);
-    void onTextEntered(sf::Uint32 unicode);
-    void onStateChanged(State state);
+    void onKeyPressed(const sf::Event::KeyEvent& key) override;
+    void onMousePressed(float x, float y) override;
+    void onTextEntered(sf::Uint32 unicode) override;
+    void onStateChanged(State state) override;
 
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -49,9 +54,9 @@ private:
     sf::Text    m_text;
     Box         m_box;
     mutable sf::RectangleShape m_cursor;
-    mutable sf::Clock  m_cursor_timer;
-    size_t             m_cursor_pos;
-    int                m_max_length;
+    mutable sf::Clock  m_cursorTimer;
+    size_t             m_cursorPos;
+    size_t             m_maxLength;
 };
 
 }

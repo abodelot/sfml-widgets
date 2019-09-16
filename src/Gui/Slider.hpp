@@ -27,14 +27,13 @@ public:
 
     void setValue(int value);
 
-
     // callbacks ---------------------------------------------------------------
-    void onKeyPressed(sf::Keyboard::Key key);
-    void onMousePressed(float x, float y);
-    void onMouseMoved(float x, float y);
-    void onMouseReleased(float x, float y);
-    void onMouseWheelMoved(int delta);
-    void onStateChanged(State state);
+    void onKeyPressed(const sf::Event::KeyEvent& key) override;
+    void onMousePressed(float x, float y) override;
+    void onMouseMoved(float x, float y) override;
+    void onMouseReleased(float x, float y) override;
+    void onMouseWheelMoved(int delta) override;
+    void onStateChanged(State state) override;
 
 private:
     void updateHandlePosition();
