@@ -29,8 +29,9 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++11" />
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
+			<Add directory="./src" />
 		</Compiler>
 		<Linker>
 			<Add library="sfml-graphics" />
@@ -38,6 +39,7 @@
 			<Add library="sfml-system" />
 			<Add library="GL" />
 		</Linker>
+		<Unit filename="demo/demo.cpp" />
 		<Unit filename="src/Gui/Button.cpp" />
 		<Unit filename="src/Gui/Button.hpp" />
 		<Unit filename="src/Gui/CheckBox.cpp" />
@@ -81,7 +83,6 @@
 		<Unit filename="src/Gui/Utils/ItemBox.inl" />
 		<Unit filename="src/Gui/Widget.cpp" />
 		<Unit filename="src/Gui/Widget.hpp" />
-		<Unit filename="src/demo.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

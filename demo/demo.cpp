@@ -43,8 +43,8 @@ int main()
     gui::Menu menu(app);
     menu.setPosition(10, 10);
 
-    gui::Theme::loadFont("resources/tahoma.ttf");
-    gui::Theme::loadTexture("resources/texture.png");
+    gui::Theme::loadFont("demo/tahoma.ttf");
+    gui::Theme::loadTexture("demo/texture.png");
     gui::Theme::textSize = 11;
     gui::Theme::click.textColor      = mkcolor("#191B18");
     gui::Theme::click.textColorHover = mkcolor("#191B18");
@@ -100,7 +100,7 @@ int main()
 
     // Custom button
     sf::Texture imgbutton;
-    imgbutton.loadFromFile("resources/themed-button.png");
+    imgbutton.loadFromFile("demo/themed-button.png");
 
     gui::SpriteButton* customButton = new gui::SpriteButton(imgbutton, "Play game");
 
@@ -129,7 +129,7 @@ int main()
     menu.addButton("Quit", C_QUIT);
 
     sf::Texture texture;
-    texture.loadFromFile("resources/sfml.png");
+    texture.loadFromFile("demo/sfml.png");
 
     sf::Sprite sprite(texture);
     sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);

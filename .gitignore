@@ -1,6 +1,9 @@
 # Demo binary
 sfml-widgets-demo
 
+# Lib
+*.a
+
 # Compilation files
 *.o
 
