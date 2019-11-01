@@ -11,21 +11,21 @@ FormLayout::FormLayout():
 }
 
 
-Widget* FormLayout::add(Widget* widget, int id)
+Widget* FormLayout::add(Widget* widget)
 {
-    return addRow("", widget, id);
+    return addRow("", widget);
 }
 
 
-Widget* FormLayout::addRow(const sf::String& str, Widget* widget, int id)
+Widget* FormLayout::addRow(const sf::String& str, Widget* widget)
 {
     gui::Label* label = new gui::Label(str);
     if (label->getSize().x > m_labelWidth)
+    {
         m_labelWidth = label->getSize().x;
-    push(label);
-
-    widget->setID(id);
-    push(widget);
+    }
+    Layout::add(label);
+    Layout::add(widget);
     return widget;
 }
 

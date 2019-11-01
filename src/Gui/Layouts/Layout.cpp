@@ -30,10 +30,30 @@ Layout::~Layout()
 }
 
 
-Button* Layout::addButton(const sf::String& string, int id)
+Widget* Layout::add(Widget* widget)
+{
+    widget->setParent(this);
+
+    if (m_first == NULL)
+    {
+        m_first = m_last = widget;
+    }
+    else
+    {
+        m_last->m_next = widget;
+        widget->m_previous = m_last;
+        m_last = widget;
+    }
+    recomputeGeometry();
+    return widget;
+}
+
+
+Button* Layout::addButton(const sf::String& string, std::function<void(void)> callback)
 {
     Button* button = new Button(string);
-    add(button, id);
+    button->setCallback(callback);
+    add(button);
     return button;
 }
 
@@ -67,25 +87,6 @@ VBoxLayout* Layout::addVBoxLayout()
     VBoxLayout* vbox = new VBoxLayout();
     add(vbox);
     return vbox;
-}
-
-
-Widget* Layout::push(Widget* widget)
-{
-    widget->setParent(this);
-
-    if (m_first == NULL)
-    {
-        m_first = m_last = widget;
-    }
-    else
-    {
-        m_last->m_next = widget;
-        widget->m_previous = m_last;
-        m_last = widget;
-    }
-    recomputeGeometry();
-    return widget;
 }
 
 

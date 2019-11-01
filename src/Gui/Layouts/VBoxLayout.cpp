@@ -4,14 +4,6 @@
 namespace gui
 {
 
-Widget* VBoxLayout::add(Widget* widget, int id)
-{
-    widget->setID(id);
-    push(widget);
-    return widget;
-}
-
-
 void VBoxLayout::recomputeGeometry()
 {
     sf::Vector2f pos;

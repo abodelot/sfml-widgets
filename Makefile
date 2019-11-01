@@ -5,7 +5,7 @@ OBJDIR  := obj
 OBJ     := $(SRC:%.cpp=$(OBJDIR)/%.o)
 
 CC      := g++
-CFLAGS  := -I$(SRCDIR) -std=c++11 -pedantic -Wall -Wextra -Wwrite-strings -O2
+CFLAGS  := -I$(SRCDIR) -std=c++11 -pedantic -Wall -Wextra -Wshadow -Wwrite-strings -O2
 LDFLAGS := -lsfml-graphics -lsfml-window -lsfml-system -lGL
 
 # Demo

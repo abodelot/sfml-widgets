@@ -24,19 +24,6 @@ sf::Color mkcolor(const std::string& hexcolor)
 
 int main()
 {
-    enum Callback
-    {
-        C_TEXT,
-        C_COLOR,
-        C_ROTATION,
-        C_BOLD,
-        C_UNDERLINED,
-        C_SCALE,
-        C_NEW_BUTTON,
-        C_VSLIDER,
-        C_QUIT
-    };
-
     // Create the main window
     sf::RenderWindow app(sf::VideoMode(640, 480), "SFML Widgets", sf::Style::Close);
 
@@ -58,24 +45,42 @@ int main()
     gui::HBoxLayout* hbox = menu.addHBoxLayout();
     gui::FormLayout* form = hbox->addFormLayout();
 
+    sf::Text text("Hello world!", gui::Theme::getFont());
+    text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
+    text.setPosition(320, 360);
+
     // Textbox
     gui::TextBox* textbox = new gui::TextBox();
     textbox->setText("Hello world!");
-    form->addRow("Text", textbox, C_TEXT);
+    textbox->setCallback([&]() {
+        text.setString(textbox->getText());
+        text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
+    });
+    form->addRow("Text", textbox);
 
     gui::TextBox* textbox2 = new gui::TextBox();
     textbox2->setText("Hello world!");
     textbox2->setMaxLength(5);
     form->addRow("Text with limit (5)", textbox2);
 
+    gui::ProgressBar* pbar0 = new gui::ProgressBar();
+
     // Slider for rotation
     gui::Slider* sliderRotation = new gui::Slider();
     sliderRotation->setQuantum(1);
-    form->addRow("Rotation", sliderRotation, C_ROTATION);
+    sliderRotation->setCallback([&]() {
+        text.setRotation(sliderRotation->getValue() * 360 / 100.f);
+        pbar0->setValue(sliderRotation->getValue());
+    });
+    form->addRow("Rotation", sliderRotation);
 
     // Slider for scale
     gui::Slider* sliderScale = new gui::Slider();
-    form->addRow("Scale", sliderScale, C_SCALE);
+    sliderScale->setCallback([&]() {
+        float scale = 1 + sliderScale->getValue() * 2 / 100.f;
+        text.setScale(scale, scale);
+    });
+    form->addRow("Scale", sliderScale);
 
     // OptionsBox for color
     gui::OptionsBox<sf::Color>* opt = new gui::OptionsBox<sf::Color>();
@@ -84,17 +89,35 @@ int main()
     opt->addItem("Green", sf::Color::Green);
     opt->addItem("Yellow", sf::Color::Yellow);
     opt->addItem("White", sf::Color::White);
-    form->addRow("Color", opt, C_COLOR);
+    opt->setCallback([&]() {
+        text.setFillColor(opt->getSelectedValue());
+    });
+    form->addRow("Color", opt);
 
     // Checbkox
     gui::CheckBox* checkboxBold = new gui::CheckBox();
-    form->addRow("Bold text", checkboxBold, C_BOLD);
+    checkboxBold->setCallback([&]() {
+        int style = text.getStyle();
+        if (checkboxBold->isChecked())
+            style |= sf::Text::Bold;
+        else
+            style &= ~sf::Text::Bold;
+        text.setStyle(style);
+    });
+    form->addRow("Bold text", checkboxBold);
 
     gui::CheckBox* checkboxUnderlined = new gui::CheckBox();
-    form->addRow("Underlined text", checkboxUnderlined, C_UNDERLINED);
+    checkboxUnderlined->setCallback([&]() {
+        int style = text.getStyle();
+        if (checkboxUnderlined->isChecked())
+            style |= sf::Text::Underlined;
+        else
+            style &= ~sf::Text::Underlined;
+        text.setStyle(style);
+    });
+    form->addRow("Underlined text", checkboxUnderlined);
 
     // Progress bar
-    gui::ProgressBar* pbar0 = new gui::ProgressBar();
     form->addRow("Progress bar", pbar0);
     form->addRow("Default button", new gui::Button("button"));
 
@@ -114,8 +137,10 @@ int main()
     gui::HBoxLayout* hbox2 = vbox->addHBoxLayout();
     gui::TextBox* textbox3 = new gui::TextBox(100);
     textbox3->setText("Button name");
-    hbox2->add(textbox3, C_NEW_BUTTON);
-    hbox2->addButton("Create button", C_NEW_BUTTON);
+    hbox2->add(textbox3);
+    hbox2->addButton("Create button", [&]() {
+        vbox->add(new gui::Button(textbox3->getText()));
+    });
 
     // Small progress bar
     gui::HBoxLayout* hbox3 = vbox->addHBoxLayout();
@@ -124,9 +149,14 @@ int main()
     hbox3->add(pbar);
 
     gui::Slider* vslider = new gui::Slider(100, gui::Slider::Vertical);
-    hbox->add(vslider, C_VSLIDER);
+    vslider->setCallback([&]() {
+        pbar->setValue(vslider->getValue());
+    });
+    hbox->add(vslider);
 
-    menu.addButton("Quit", C_QUIT);
+    menu.addButton("Quit", [&]() {
+        app.close();
+    });
 
     sf::Texture texture;
     texture.loadFromFile("demo/sfml.png");
@@ -135,68 +165,16 @@ int main()
     sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
     sprite.setPosition(300, 360);
 
-    sf::Text text(textbox->getText(), gui::Theme::getFont());
-    text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
-    text.setPosition(320, 360);
-
-    // Start the game loop
+    // Start the application loop
     while (app.isOpen())
     {
         // Process events
         sf::Event event;
         while (app.pollEvent(event))
         {
-            int id = menu.onEvent(event);
-            switch (id)
-            {
-                case C_TEXT:
-                    text.setString(textbox->getText());
-                    text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
-                    break;
-                case C_COLOR:
-                    text.setFillColor(opt->getSelectedValue());
-                    break;
-                case C_ROTATION:
-                    text.setRotation(sliderRotation->getValue() * 360 / 100.f);
-                    pbar0->setValue(sliderRotation->getValue());
-                    break;
-                case C_UNDERLINED:
-                {
-                    int style = text.getStyle();
-                    if (checkboxUnderlined->isChecked())
-                        style |= sf::Text::Underlined;
-                    else
-                        style &= ~sf::Text::Underlined;
-                    text.setStyle(style);
-                    break;
-                }
-                case C_BOLD:
-                {
-                    int style = text.getStyle();
-                    if (checkboxBold->isChecked())
-                        style |= sf::Text::Bold;
-                    else
-                        style &= ~sf::Text::Bold;
-                    text.setStyle(style);
-                    break;
-                }
-                case C_SCALE:
-                {
-                    float scale = 1 + sliderScale->getValue() * 2 / 100.f;
-                    text.setScale(scale, scale);
-                    break;
-                }
-                case C_QUIT:
-                    app.close();
-                    break;
-                case C_VSLIDER:
-                    pbar->setValue(vslider->getValue());
-                    break;
-                case C_NEW_BUTTON:
-                    vbox->addButton(textbox2->getText());
-                    break;
-            }
-            // Close window : exit
+            // Send events to menu
+            menu.onEvent(event);
+
             if (event.type == sf::Event::Closed)
                 app.close();
         }

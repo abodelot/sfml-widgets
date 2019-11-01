@@ -5,13 +5,12 @@ namespace gui
 {
 
 Menu::Menu(sf::RenderTarget& window):
-    m_window(window),
-    m_triggered(NULL)
+    m_window(window)
 {
 }
 
 
-int Menu::onEvent(const sf::Event& event)
+void Menu::onEvent(const sf::Event& event)
 {
     switch (event.type)
     {
@@ -57,20 +56,6 @@ int Menu::onEvent(const sf::Event& event)
     default:
         break;
     }
-
-    if (m_triggered != NULL)
-    {
-        int id = m_triggered->getID();
-        m_triggered = NULL;
-        return id;
-    }
-    return -1;
-}
-
-
-void Menu::triggerCallback(const Widget* widget)
-{
-    m_triggered = widget;
 }
 
 

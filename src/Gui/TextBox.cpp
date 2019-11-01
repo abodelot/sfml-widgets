@@ -1,7 +1,7 @@
-#include <SFML/OpenGL.hpp>
-
 #include "TextBox.hpp"
 #include "Theme.hpp"
+
+#include <SFML/OpenGL.hpp>
 
 #define BLINK_PERIOD 1.f
 
@@ -59,6 +59,7 @@ void TextBox::setMaxLength(size_t maxLength)
     if (m_text.getString().getSize() > m_maxLength)
     {
         m_text.setString(m_text.getString().substring(0, m_maxLength));
+        setCursor(m_maxLength);
     }
 }
 

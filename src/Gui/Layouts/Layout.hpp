@@ -28,10 +28,10 @@ public:
      * The container will take care of widget deallocation
      * @return added widget
      */
-    virtual Widget* add(Widget* widget, int id = -1) = 0;
+    virtual Widget* add(Widget* widget);
 
     /// Helpers
-    Button*     addButton(const sf::String& string, int id = -1);
+    Button*     addButton(const sf::String& string, std::function<void(void)> callback);
     Label*      addLabel(const sf::String& string);
     FormLayout* addFormLayout();
     HBoxLayout* addHBoxLayout();
@@ -53,11 +53,6 @@ protected:
     Layout* toLayout() override { return this; } // hack?
     bool focusNextWidget();
     bool focusPreviousWidget();
-
-    /**
-     * Append a new widget in the container
-     */
-    Widget* push(Widget* widget);
 
     Widget* getFirstWidget();
 

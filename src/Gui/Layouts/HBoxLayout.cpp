@@ -4,14 +4,6 @@
 namespace gui
 {
 
-Widget* HBoxLayout::add(Widget* widget, int id)
-{
-    widget->setID(id);
-    push(widget);
-    return widget;
-}
-
-
 void HBoxLayout::recomputeGeometry()
 {
     sf::Vector2f pos;

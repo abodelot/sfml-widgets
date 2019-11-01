@@ -177,14 +177,14 @@ void OptionsBox<T>::onMouseReleased(float x, float y)
 
 
 template <class T>
-void OptionsBox<T>::onKeyPressed(sf::Keyboard::Key key)
+void OptionsBox<T>::onKeyPressed(const sf::Event::KeyEvent& key)
 {
-    if (key == sf::Keyboard::Left)
+    if (key.code == sf::Keyboard::Left)
     {
         selectPrevious();
         m_arrow_left.press();
     }
-    else if (key == sf::Keyboard::Right)
+    else if (key.code == sf::Keyboard::Right)
     {
         selectNext();
         m_arrow_right.press();
@@ -193,13 +193,13 @@ void OptionsBox<T>::onKeyPressed(sf::Keyboard::Key key)
 
 
 template <class T>
-void OptionsBox<T>::onKeyReleased(sf::Keyboard::Key key)
+void OptionsBox<T>::onKeyReleased(const sf::Event::KeyEvent& key)
 {
-    if (key == sf::Keyboard::Left)
+    if (key.code == sf::Keyboard::Left)
     {
         m_arrow_left.release();
     }
-    else if (key == sf::Keyboard::Right)
+    else if (key.code == sf::Keyboard::Right)
     {
         m_arrow_right.release();
     }

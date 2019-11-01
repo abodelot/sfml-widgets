@@ -14,13 +14,13 @@ class FormLayout: public Layout
 public:
     FormLayout();
 
-    Widget* add(Widget* widget, int id = -1) override;
+    Widget* add(Widget*) override;
 
     /**
      * @param label: label displayed before the widget
      * @param widget: widget to be added
      */
-    Widget* addRow(const sf::String& label, Widget* widget, int id = -1);
+    Widget* addRow(const sf::String& label, Widget* widget);
 
 private:
     void recomputeGeometry() override;
