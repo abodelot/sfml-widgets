@@ -28,7 +28,7 @@ public:
      * The container will take care of widget deallocation
      * @return added widget
      */
-    virtual Widget* add(Widget* widget);
+    Widget* add(Widget* widget);
 
     /// Helpers
     Button*     addButton(const sf::String& string, std::function<void(void)> callback);
@@ -62,7 +62,7 @@ private:
      * @param state: new state of the widget if it took focus
      * @return true if widget took the focus, otherwise false
      */
-    bool focusWidget(Widget* widget, State state = StateFocused);
+    bool focusWidget(Widget* widget);
 
     Widget*   m_first;
     Widget*   m_last;

@@ -32,4 +32,3 @@ private:
 }
 
 #endif // GUI_PROGRESS_BAR_HPP
-

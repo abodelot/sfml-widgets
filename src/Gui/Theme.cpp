@@ -17,7 +17,7 @@ sf::Keyboard::Key Theme::previousWidgetKey = sf::Keyboard::Up;
 
 sf::Font Theme::m_font;
 sf::Texture Theme::m_texture;
-sf::IntRect Theme::m_subrects[_TEX_COUNT];
+sf::IntRect Theme::m_subrects[_TEXTURE_ID_COUNT];
 
 
 bool Theme::loadFont(const std::string& filename)
@@ -32,9 +32,9 @@ bool Theme::loadTexture(const std::string& filename)
     {
         sf::IntRect subrect;
         subrect.width = m_texture.getSize().x;
-        subrect.height = m_texture.getSize().y / _TEX_COUNT;
+        subrect.height = m_texture.getSize().y / _TEXTURE_ID_COUNT;
 
-        for (int i = 0; i < _TEX_COUNT; ++i)
+        for (int i = 0; i < _TEXTURE_ID_COUNT; ++i)
         {
             m_subrects[i] = subrect;
             subrect.top += subrect.height;
@@ -90,6 +90,12 @@ const sf::IntRect& Theme::getCrossTextureRect()
 const sf::IntRect& Theme::getArrowTextureRect()
 {
     return m_subrects[ARROW];
+}
+
+
+const sf::IntRect& Theme::getProgressBarTextureRect()
+{
+    return m_subrects[PROGRESS_BAR];
 }
 
 

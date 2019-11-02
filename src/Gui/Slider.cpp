@@ -6,7 +6,7 @@ namespace gui
 
 Slider::Slider(float length, Type type):
     m_type(type),
-    m_quantum(10),
+    m_step(10),
     m_value(0),
     m_box(Box::Input)
 {
@@ -53,16 +53,16 @@ Slider::Slider(float length, Type type):
 }
 
 
-int Slider::getQuantum() const
+int Slider::getStep() const
 {
-    return m_quantum;
+    return m_step;
 }
 
 
-void Slider::setQuantum(int quantum)
+void Slider::setStep(int step)
 {
-    if (quantum > 0 && quantum < 100)
-        m_quantum = quantum;
+    if (step > 0 && step < 100)
+        m_step = step;
 }
 
 
@@ -81,9 +81,9 @@ void Slider::setValue(int value)
         value = 100;
     else
     {
-        // Round value to the closest quantum multiple
-        int temp = value + m_quantum / 2;
-        value = temp - temp % m_quantum;
+        // Round value to the closest step multiple
+        int temp = value + m_step / 2;
+        value = temp - temp % m_step;
     }
 
     // If value has changed
@@ -135,10 +135,10 @@ void Slider::onKeyPressed(const sf::Event::KeyEvent& key)
     switch (key.code)
     {
     case sf::Keyboard::Left:
-        setValue(m_value - m_quantum);
+        setValue(m_value - m_step);
         break;
     case sf::Keyboard::Right:
-        setValue(m_value + m_quantum);
+        setValue(m_value + m_step);
         break;
     case sf::Keyboard::Home:
         setValue(0);
@@ -165,12 +165,15 @@ void Slider::onMousePressed(float x, float y)
 
 void Slider::onMouseMoved(float x, float y)
 {
-    if (getState() == StatePressed)
+    if (getState() == StateFocused)
     {
-        if (m_type == Horizontal)
-            setValue(100 * x / getSize().x);
-        else
-            setValue(100 - (100 * y / getSize().y));
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            if (m_type == Horizontal)
+                setValue(100 * x / getSize().x);
+            else
+                setValue(100 - (100 * y / getSize().y));
+        }
     }
     else if (m_handle.containsPoint(x, y))
     {
@@ -191,7 +194,7 @@ void Slider::onMouseReleased(float, float)
 
 void Slider::onMouseWheelMoved(int delta)
 {
-    setValue(m_value + (delta > 0 ? m_quantum : -m_quantum));
+    setValue(m_value + (delta > 0 ? m_step : -m_step));
 }
 
 

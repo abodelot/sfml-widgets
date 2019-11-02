@@ -32,7 +32,7 @@ public:
     void setMaxLength(size_t maxLength);
 
     /**
-      Set the cursor position
+     * Set the cursor position
      */
     void setCursor(size_t index);
 

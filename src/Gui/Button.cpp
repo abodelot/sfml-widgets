@@ -59,6 +59,12 @@ void Button::onMouseMoved(float x, float y)
 }
 
 
+void Button::onMousePressed(float x, float y)
+{
+    m_box.press();
+}
+
+
 void Button::onMouseReleased(float x, float y)
 {
     if (containsPoint({x, y}))

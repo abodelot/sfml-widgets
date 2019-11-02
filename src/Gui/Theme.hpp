@@ -33,6 +33,8 @@ public:
 
     static const sf::IntRect& getArrowTextureRect();
 
+    static const sf::IntRect& getProgressBarTextureRect();
+
     /**
      * Widget height based on text size
      */
@@ -74,12 +76,13 @@ private:
         BOX_INPUT_FOCUSED,
         CROSS,
         ARROW,
-        _TEX_COUNT
+        PROGRESS_BAR,
+        _TEXTURE_ID_COUNT
     };
 
     static sf::Font    m_font;
     static sf::Texture m_texture;
-    static sf::IntRect m_subrects[_TEX_COUNT];
+    static sf::IntRect m_subrects[_TEXTURE_ID_COUNT];
 };
 
 }

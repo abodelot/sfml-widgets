@@ -14,9 +14,8 @@ class FormLayout: public Layout
 public:
     FormLayout();
 
-    Widget* add(Widget*) override;
-
     /**
+     * Add a new label/widget row in the form
      * @param label: label displayed before the widget
      * @param widget: widget to be added
      */

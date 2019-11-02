@@ -27,6 +27,8 @@ void SpriteButton::setString(const sf::String& string)
 {
     m_text.setString(string);
     centerText(m_text);
+    std::cout << "text at " << m_text.getPosition().y << std::endl;
+    std::cout << "line spacing = " << m_text.getLineSpacing() << std::endl;
 }
 
 

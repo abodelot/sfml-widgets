@@ -97,7 +97,7 @@ protected:
     Layout* getParent() { return m_parent; }
 
     // hack...
-    virtual Layout* toLayout() { return NULL; }
+    virtual Layout* toLayout() { return nullptr; }
 
     void centerText(sf::Text& text);
 

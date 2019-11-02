@@ -4,14 +4,14 @@ namespace gui
 {
 
 Image::Image():
-    m_texture(NULL)
+    m_texture(nullptr)
 {
     setSelectable(false);
 }
 
 
 Image::Image(const sf::Texture& texture):
-    m_texture(NULL)
+    m_texture(nullptr)
 {
     setSelectable(false);
     setTexture(texture);
@@ -42,7 +42,7 @@ void Image::setColor(const sf::Color& color)
 
 void Image::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    if (m_texture != NULL)
+    if (m_texture != nullptr)
     {
         states.transform *= getTransform();
         states.texture = m_texture;

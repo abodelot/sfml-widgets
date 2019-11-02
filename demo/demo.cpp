@@ -1,9 +1,10 @@
 #include "Gui/Menu.hpp"
 #include "Gui/Theme.hpp"
 #include "Gui/Gui.hpp"
+#include <SFML/Graphics.hpp>
 
 
-sf::Color mkcolor(const std::string& hexcolor)
+sf::Color hex2color(const std::string& hexcolor)
 {
     sf::Color color = sf::Color::Black;
     if (hexcolor.size() == 7) // #ffffff
@@ -21,9 +22,24 @@ sf::Color mkcolor(const std::string& hexcolor)
     return color;
 }
 
+struct Theme
+{
+    sf::Color backgroundColor;
+    std::string texturePath;
+};
 
 int main()
 {
+    Theme defaultTheme = {
+        hex2color("#dddbde"),
+        "demo/texture-default.png"
+    };
+
+    Theme win98Theme = {
+        hex2color("#d4d0c8"),
+        "demo/texture-win98.png"
+    };
+
     // Create the main window
     sf::RenderWindow app(sf::VideoMode(640, 480), "SFML Widgets", sf::Style::Close);
 
@@ -31,16 +47,16 @@ int main()
     menu.setPosition(10, 10);
 
     gui::Theme::loadFont("demo/tahoma.ttf");
-    gui::Theme::loadTexture("demo/texture.png");
+    gui::Theme::loadTexture(defaultTheme.texturePath);
     gui::Theme::textSize = 11;
-    gui::Theme::click.textColor      = mkcolor("#191B18");
-    gui::Theme::click.textColorHover = mkcolor("#191B18");
-    gui::Theme::click.textColorFocus = mkcolor("#000");
-    gui::Theme::input.textColor = mkcolor("#000");
-    gui::Theme::input.textColorHover = mkcolor("#000");
-    gui::Theme::input.textColorFocus = mkcolor("#000");
+    gui::Theme::click.textColor      = hex2color("#191B18");
+    gui::Theme::click.textColorHover = hex2color("#191B18");
+    gui::Theme::click.textColorFocus = hex2color("#000");
+    gui::Theme::input.textColor = hex2color("#000");
+    gui::Theme::input.textColorHover = hex2color("#000");
+    gui::Theme::input.textColorFocus = hex2color("#000");
     gui::Theme::PADDING = 2.f;
-    gui::Theme::windowBgColor = mkcolor("#dddbde");
+    gui::Theme::windowBgColor = defaultTheme.backgroundColor;
 
     gui::HBoxLayout* hbox = menu.addHBoxLayout();
     gui::FormLayout* form = hbox->addFormLayout();
@@ -67,7 +83,7 @@ int main()
 
     // Slider for rotation
     gui::Slider* sliderRotation = new gui::Slider();
-    sliderRotation->setQuantum(1);
+    sliderRotation->setStep(1);
     sliderRotation->setCallback([&]() {
         text.setRotation(sliderRotation->getValue() * 360 / 100.f);
         pbar0->setValue(sliderRotation->getValue());
@@ -125,13 +141,22 @@ int main()
     sf::Texture imgbutton;
     imgbutton.loadFromFile("demo/themed-button.png");
 
-    gui::SpriteButton* customButton = new gui::SpriteButton(imgbutton, "Play game");
-
-    customButton->setTextSize(18);
+    gui::SpriteButton* customButton = new gui::SpriteButton(imgbutton, "Play");
+    customButton->setTextSize(20);
     form->addRow("Custom button", customButton);
 
     gui::VBoxLayout* vbox = hbox->addVBoxLayout();
     vbox->addLabel("This pannel is on the left");
+
+    gui::OptionsBox<Theme>* themeBox = new gui::OptionsBox<Theme>();
+    themeBox->addItem("Windows 98", win98Theme);
+    themeBox->addItem("Default", defaultTheme);
+    themeBox->setCallback([&]() {
+        const Theme& theme = themeBox->getSelectedValue();
+        gui::Theme::loadTexture(theme.texturePath);
+        gui::Theme::windowBgColor = theme.backgroundColor;
+    });
+    vbox->add(themeBox);
 
     // Textbox
     gui::HBoxLayout* hbox2 = vbox->addHBoxLayout();
@@ -174,7 +199,6 @@ int main()
         {
             // Send events to menu
             menu.onEvent(event);
-
             if (event.type == sf::Event::Closed)
                 app.close();
         }

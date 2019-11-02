@@ -1,14 +1,15 @@
 #include "Widget.hpp"
 #include "Menu.hpp"
 #include "Layouts/Layout.hpp"
+#include <cmath>
 
 namespace gui
 {
 
 Widget::Widget():
-    m_parent(NULL),
-    m_previous(NULL),
-    m_next(NULL),
+    m_parent(nullptr),
+    m_previous(nullptr),
+    m_next(nullptr),
     m_state(StateDefault),
     m_selectable(true)
 {
@@ -40,7 +41,7 @@ const sf::Vector2f& Widget::getPosition() const
 sf::Vector2f Widget::getAbsolutePosition() const
 {
     sf::Vector2f position = m_position;
-    for (Widget* parent = m_parent; parent != NULL; parent = parent->m_parent)
+    for (Widget* parent = m_parent; parent != nullptr; parent = parent->m_parent)
     {
         position.x += parent->m_position.x;
         position.y += parent->m_position.y;
@@ -52,7 +53,7 @@ sf::Vector2f Widget::getAbsolutePosition() const
 void Widget::setSize(const sf::Vector2f& size)
 {
     m_size = size;
-    if (m_parent != NULL)
+    if (m_parent != nullptr)
     {
         Widget* parent = m_parent;
         parent->recomputeGeometry();
@@ -140,7 +141,8 @@ const sf::Transform& Widget::getTransform() const
 void Widget::centerText(sf::Text& text)
 {
     sf::FloatRect r = text.getLocalBounds();
-    text.setPosition(int(m_size.x - r.width) / 2, int(m_size.y - r.height) / 2);
+    text.setOrigin(r.left + std::round(r.width / 2.f), r.top + std::round(r.height / 2.f));
+    text.setPosition(m_size.x / 2, m_size.y / 2);
 }
 
 // callbacks -------------------------------------------------------------------

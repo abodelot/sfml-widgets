@@ -4,8 +4,6 @@
 namespace gui
 {
 
-const sf::Color BAR_COLOR = sf::Color(0x93, 0xd2, 0x40);
-
 ProgressBar::ProgressBar(float width):
     m_box(Box::Input),
     m_value(0.f)
@@ -20,11 +18,14 @@ ProgressBar::ProgressBar(float width):
     m_bar[1].position = sf::Vector2f(Theme::borderSize, Theme::borderSize);
     m_bar[2].position = sf::Vector2f(Theme::borderSize, Theme::getBoxHeight() - Theme::borderSize);
     m_bar[3].position = sf::Vector2f(Theme::borderSize, Theme::getBoxHeight() - Theme::borderSize);
-    for (int i = 0; i < 4; ++i)
-        m_bar[i].color = BAR_COLOR;
+
+    const sf::IntRect& rect = Theme::getProgressBarTextureRect();
+    m_bar[0].texCoords = sf::Vector2f(rect.left, rect.top);
+    m_bar[1].texCoords = sf::Vector2f(rect.left + rect.width, rect.top);
+    m_bar[2].texCoords = sf::Vector2f(rect.left + rect.width, rect.top + rect.height);
+    m_bar[3].texCoords = sf::Vector2f(rect.left, rect.top + rect.height);
 
     setValue(m_value);
-
     setSelectable(false);
     setSize(m_box.getSize());
 }
@@ -52,6 +53,7 @@ void ProgressBar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
     target.draw(m_box, states);
+    states.texture = &Theme::getTexture();
     target.draw(m_bar, 4, sf::Quads, states);
     target.draw(m_text, states);
 }

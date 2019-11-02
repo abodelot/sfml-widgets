@@ -27,6 +27,7 @@ public:
 
     void onStateChanged(State state) override;
     void onMouseMoved(float x, float y) override;
+    void onMousePressed(float x, float y) override;
     void onMouseReleased(float x, float y) override;
     void onKeyPressed(const sf::Event::KeyEvent& key) override;
     void onKeyReleased(const sf::Event::KeyEvent& key) override;

@@ -19,9 +19,12 @@ public:
 
     Slider(float length = 200, Type type = Horizontal);
 
-    int getQuantum() const;
+    int getStep() const;
 
-    void setQuantum(int quantum);
+    /**
+     * Define the amount of units to change the slider when adjusting by drag and drop
+     */
+    void setStep(int step);
 
     int getValue() const;
 
@@ -41,7 +44,7 @@ private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     Type m_type;
-    int  m_quantum;
+    int  m_step;
     int  m_value;
     Box  m_box;
     sf::Vertex m_progression[4];
