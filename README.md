@@ -3,7 +3,8 @@ SFML Widgets
 
 A simple GUI module for SFML.
 
-Author: Alexandre Bodelot <alexandre.bodelot@gmail.com>
+- Author: Alexandre Bodelot <alexandre.bodelot@gmail.com>
+- License: [MIT License](http://opensource.org/licenses/MIT) (See LICENSE file)
 
 Run `make` to build the library (`lib/libsfml-widgets.a`) and the demo program.
 
