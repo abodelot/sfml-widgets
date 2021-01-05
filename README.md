@@ -1,6 +1,9 @@
 SFML Widgets
 ============
 
+
+![doc/demo_program.png](doc/demo_program.png)
+
 A simple GUI module for SFML.
 
 - Author: Alexandre Bodelot <alexandre.bodelot@gmail.com>
