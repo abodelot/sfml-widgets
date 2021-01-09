@@ -10,3 +10,10 @@ sfml-widgets-demo
 # Code::Blocks
 sfml-widgets.layout
 sfml-widgets.depend
+
+# CMakeFiles
+CMakeFiles/*
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+demo_program
