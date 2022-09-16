@@ -41,15 +41,31 @@ public:
      */
     size_t getCursor() const;
 
+    /**
+     * Set selected text
+     */
+    void setSelectedText(size_t from, size_t to);
+
+    /**
+     * Get selected text
+     */
+    const sf::String& getSelectedText() const;
+
 protected:
     // Callbacks
     void onKeyPressed(const sf::Event::KeyEvent& key) override;
     void onMousePressed(float x, float y) override;
+    void onMouseReleased(float x, float y) override;
     void onTextEntered(sf::Uint32 unicode) override;
     void onStateChanged(State state) override;
 
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+    /**
+     * Delete selected text if any
+     */
+    void deleteSelectedText();
 
     sf::Text    m_text;
     Box         m_box;
@@ -57,6 +73,9 @@ private:
     mutable sf::Clock  m_cursorTimer;
     size_t             m_cursorPos;
     size_t             m_maxLength;
+    size_t  m_selectionFirst;
+    size_t  m_selectionLast;
+    sf::String  m_selectedText;
 };
 
 }

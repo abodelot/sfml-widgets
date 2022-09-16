@@ -55,6 +55,7 @@ int main()
     gui::Theme::input.textColor = hex2color("#000");
     gui::Theme::input.textColorHover = hex2color("#000");
     gui::Theme::input.textColorFocus = hex2color("#000");
+    gui::Theme::input.textSelectionColor = hex2color("#8791AD");
     gui::Theme::PADDING = 2.f;
     gui::Theme::windowBgColor = defaultTheme.backgroundColor;
 
