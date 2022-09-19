@@ -127,6 +127,11 @@ void TextBox::onKeyPressed(const sf::Event::KeyEvent& key)
         break;
 
     case sf::Keyboard::BackSpace:
+        if(!m_selectedText.isEmpty())
+        {
+            deleteSelectedText();
+            break;
+        }
         // Erase character before cursor
         if (m_cursorPos > 0)
         {
@@ -139,6 +144,11 @@ void TextBox::onKeyPressed(const sf::Event::KeyEvent& key)
         break;
 
     case sf::Keyboard::Delete:
+        if(!m_selectedText.isEmpty())
+        {
+            deleteSelectedText();
+            break;
+        }
         // Erase character after cursor
         if (m_cursorPos < m_text.getString().getSize())
         {
@@ -322,8 +332,10 @@ void TextBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void TextBox::setSelectedText(size_t from, size_t to)
 {
-    if((m_selectionFirst = from) < (m_selectionLast = to))
+    if(from != to)
     {
+        m_selectionLast = std::max(from, to);
+        m_selectionFirst = std::min(from, to);
         m_selectedText = m_text.getString().substring(m_selectionFirst, m_selectionLast - m_selectionFirst);
     }
     else
