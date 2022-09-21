@@ -56,6 +56,7 @@ protected:
     void onKeyPressed(const sf::Event::KeyEvent& key) override;
     void onMousePressed(float x, float y) override;
     void onMouseReleased(float x, float y) override;
+    void onMouseMoved(float x, float y) override;
     void onTextEntered(sf::Uint32 unicode) override;
     void onStateChanged(State state) override;
 

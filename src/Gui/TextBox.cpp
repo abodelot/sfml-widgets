@@ -257,6 +257,24 @@ void TextBox::onMouseReleased(float x, float y)
 }
 
 
+void TextBox::onMouseMoved(float x, float y)
+{
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        for (int i = m_text.getString().getSize(); i >= 0; --i)
+        {
+            // Place cursor after the character under the mouse
+            sf::Vector2f glyph_pos = m_text.findCharacterPos(i);
+            if (glyph_pos.x <= x)
+            {
+                setSelectedText(m_cursorPos, i);
+                break;
+            }
+        }
+    }
+}
+
+
 void TextBox::onTextEntered(sf::Uint32 unicode)
 {
     if (unicode > 30 && (unicode < 127 || unicode > 159))
@@ -301,11 +319,10 @@ void TextBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
     // Draw selection indicator
     if(!m_selectedText.isEmpty())
     {
-        sf::RectangleShape selRect; {
-            selRect.setPosition(m_text.findCharacterPos(m_selectionFirst));
-            selRect.setSize({m_text.findCharacterPos(m_selectionLast).x - m_text.findCharacterPos(m_selectionFirst).x, m_cursor.getSize().y});
-            selRect.setFillColor(Theme::input.textSelectionColor);
-        }
+        sf::RectangleShape selRect;
+        selRect.setPosition(m_text.findCharacterPos(m_selectionFirst));
+        selRect.setSize({m_text.findCharacterPos(m_selectionLast).x - m_text.findCharacterPos(m_selectionFirst).x, m_cursor.getSize().y});
+        selRect.setFillColor(Theme::input.textSelectionColor);
         target.draw(selRect, states);
     }
 
