@@ -41,22 +41,53 @@ public:
      */
     size_t getCursor() const;
 
+    /**
+     * Set selected text
+     */
+    void setSelectedText(size_t from, size_t to);
+
+    /**
+     * Get selected text
+     */
+    const sf::String& getSelectedText() const;
+
+    /**
+     * Set placeholder text
+     */
+    void setPlaceholder(const sf::String& placeholder);
+
+    /**
+     * Get placeholder text
+     */
+    const sf::String& getPlaceholder() const;
+
 protected:
     // Callbacks
     void onKeyPressed(const sf::Event::KeyEvent& key) override;
     void onMousePressed(float x, float y) override;
+    void onMouseReleased(float x, float y) override;
+    void onMouseMoved(float x, float y) override;
     void onTextEntered(sf::Uint32 unicode) override;
     void onStateChanged(State state) override;
 
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+    /**
+     * Delete selected text if any
+     */
+    void deleteSelectedText();
+
     sf::Text    m_text;
+    sf::Text    m_placeholder;
     Box         m_box;
     mutable sf::RectangleShape m_cursor;
     mutable sf::Clock  m_cursorTimer;
     size_t             m_cursorPos;
     size_t             m_maxLength;
+    size_t  m_selectionFirst;
+    size_t  m_selectionLast;
+    sf::String  m_selectedText;
 };
 
 }

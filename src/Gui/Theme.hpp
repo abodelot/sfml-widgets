@@ -51,6 +51,8 @@ public:
         sf::Color textColor;
         sf::Color textColorHover;
         sf::Color textColorFocus;
+        sf::Color textSelectionColor;
+        sf::Color textPlaceholderColor;
     };
 
     static Style click;
