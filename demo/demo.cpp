@@ -56,6 +56,7 @@ int main()
     gui::Theme::input.textColorHover = hex2color("#000");
     gui::Theme::input.textColorFocus = hex2color("#000");
     gui::Theme::input.textSelectionColor = hex2color("#8791AD");
+    gui::Theme::input.textPlaceholderColor = hex2color("#8791AD");
     gui::Theme::PADDING = 2.f;
     gui::Theme::windowBgColor = defaultTheme.backgroundColor;
 
@@ -73,6 +74,7 @@ int main()
         text.setString(textbox->getText());
         text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
     });
+    textbox->setPlaceholder("Type something!");
     form->addRow("Text", textbox);
 
     gui::TextBox* textbox2 = new gui::TextBox();

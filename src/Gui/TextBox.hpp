@@ -51,6 +51,16 @@ public:
      */
     const sf::String& getSelectedText() const;
 
+    /**
+     * Set placeholder text
+     */
+    void setPlaceholder(const sf::String& placeholder);
+
+    /**
+     * Get placeholder text
+     */
+    const sf::String& getPlaceholder() const;
+
 protected:
     // Callbacks
     void onKeyPressed(const sf::Event::KeyEvent& key) override;
@@ -69,6 +79,7 @@ private:
     void deleteSelectedText();
 
     sf::Text    m_text;
+    sf::Text    m_placeholder;
     Box         m_box;
     mutable sf::RectangleShape m_cursor;
     mutable sf::Clock  m_cursorTimer;

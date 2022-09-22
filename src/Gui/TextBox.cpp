@@ -21,6 +21,11 @@ TextBox::TextBox(float width):
     m_text.setFillColor(Theme::input.textColor);
     m_text.setCharacterSize(Theme::textSize);
 
+    m_placeholder.setFont(Theme::getFont());
+    m_placeholder.setPosition(offset, offset);
+    m_placeholder.setFillColor(Theme::input.textPlaceholderColor);
+    m_placeholder.setCharacterSize(Theme::textSize);
+
     // Build cursor
     m_cursor.setPosition(offset, offset);
     m_cursor.setSize(sf::Vector2f(1.f, Theme::getLineSpacing()));
@@ -316,17 +321,23 @@ void TextBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
     sf::Vector2f pos = getAbsolutePosition();
     glScissor(pos.x + Theme::borderSize, target.getSize().y - (pos.y + getSize().y), getSize().x, getSize().y);
 
-    // Draw selection indicator
-    if(!m_selectedText.isEmpty())
+    if(m_text.getString().isEmpty())
     {
-        sf::RectangleShape selRect;
-        selRect.setPosition(m_text.findCharacterPos(m_selectionFirst));
-        selRect.setSize({m_text.findCharacterPos(m_selectionLast).x - m_text.findCharacterPos(m_selectionFirst).x, m_cursor.getSize().y});
-        selRect.setFillColor(Theme::input.textSelectionColor);
-        target.draw(selRect, states);
+        target.draw(m_placeholder, states);
     }
-
-    target.draw(m_text, states);
+    else
+    {
+        // Draw selection indicator
+        if(!m_selectedText.isEmpty())
+        {
+            sf::RectangleShape selRect;
+            selRect.setPosition(m_text.findCharacterPos(m_selectionFirst));
+            selRect.setSize({m_text.findCharacterPos(m_selectionLast).x - m_text.findCharacterPos(m_selectionFirst).x, m_cursor.getSize().y});
+            selRect.setFillColor(Theme::input.textSelectionColor);
+            target.draw(selRect, states);
+        }
+        target.draw(m_text, states);
+    }
 
     glDisable(GL_SCISSOR_TEST);
 
@@ -346,6 +357,7 @@ void TextBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
         target.draw(m_cursor, states);
     }
 }
+
 
 void TextBox::setSelectedText(size_t from, size_t to)
 {
@@ -367,6 +379,7 @@ const sf::String& TextBox::getSelectedText() const
     return m_selectedText;
 }
 
+
 void TextBox::deleteSelectedText()
 {
     // Delete if any selected text
@@ -380,5 +393,16 @@ void TextBox::deleteSelectedText()
     }
 }
 
+
+void TextBox::setPlaceholder(const sf::String& placeholder)
+{
+    m_placeholder.setString(placeholder);
+}
+
+
+const sf::String& TextBox::getPlaceholder() const
+{
+    return m_placeholder.getString();
+}
 
 }
