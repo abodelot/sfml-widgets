@@ -1,0 +1,16 @@
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Compile
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cc: [clang++, g++]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo apt install build-essential libsfml-dev
+      - name: Build
+        run: make CC=${{ matrix.cc }}

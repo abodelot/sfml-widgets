@@ -3,6 +3,8 @@ SFML Widgets
 
 A simple GUI module for SFML.
 
+![workflow](https://github.com/abodelot/sfml-widgets/actions/workflows/ci.yml/badge.svg)
+
 - Author: Alexandre Bodelot <alexandre.bodelot@gmail.com>
 - License: [MIT License](http://opensource.org/licenses/MIT) (See LICENSE file)
 

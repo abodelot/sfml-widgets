@@ -15,7 +15,7 @@ namespace gui
  * The callback is triggered when selection is changed.
  */
 template <class T>
-class ComboBox
+class ComboBox: public Widget
 {
 public:
     ComboBox();
