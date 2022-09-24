@@ -60,8 +60,8 @@ public:
      */
     void setCallback(std::function<void(void)> callback);
 
-    // Event callbacks ---------------------------------------------------------
-
+protected:
+    // Callbacks
     virtual void onStateChanged(State state);
     virtual void onMouseMoved(float x, float y);
     virtual void onMousePressed(float x, float y);
@@ -71,7 +71,6 @@ public:
     virtual void onKeyReleased(const sf::Event::KeyEvent& key);
     virtual void onTextEntered(sf::Uint32 unicode);
 
-protected:
     void setSize(const sf::Vector2f& size);
     void setSize(float widget, float height);
 
@@ -96,7 +95,10 @@ protected:
     void setParent(Layout* parent);
     Layout* getParent() { return m_parent; }
 
-    // hack...
+    /**
+     * Get the widget typed as a Layout if applicable
+     * Used to check if the widget is a container (Layout and its subclasses)
+     */
     virtual Layout* toLayout() { return nullptr; }
 
     void centerText(sf::Text& text);
@@ -106,14 +108,14 @@ protected:
     const sf::Transform& getTransform() const;
 
 private:
-    Layout*      m_parent;
-    Widget*      m_previous;
-    Widget*      m_next;
+    Layout* m_parent;
+    Widget* m_previous;
+    Widget* m_next;
 
-    State        m_state;
+    State m_state;
     sf::Vector2f m_position;
     sf::Vector2f m_size;
-    bool         m_selectable;
+    bool m_selectable;
 
     std::function<void(void)> m_callback;
 

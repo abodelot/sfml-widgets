@@ -82,7 +82,7 @@ private:
         _TEXTURE_ID_COUNT
     };
 
-    static sf::Font    m_font;
+    static sf::Font m_font;
     static sf::Texture m_texture;
     static sf::IntRect m_subrects[_TEXTURE_ID_COUNT];
 };

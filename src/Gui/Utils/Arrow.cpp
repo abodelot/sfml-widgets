@@ -8,10 +8,10 @@ Arrow::Arrow(Direction direction):
     m_direction(direction)
 {
     const sf::IntRect& rect = Theme::getArrowTextureRect();
-    m_vertices[0].texCoords = sf::Vector2f(rect.left,              rect.top);
+    m_vertices[0].texCoords = sf::Vector2f(rect.left, rect.top);
     m_vertices[1].texCoords = sf::Vector2f(rect.left + rect.width, rect.top);
     m_vertices[2].texCoords = sf::Vector2f(rect.left + rect.width, rect.top + rect.height);
-    m_vertices[3].texCoords = sf::Vector2f(rect.left,              rect.top + rect.height);
+    m_vertices[3].texCoords = sf::Vector2f(rect.left, rect.top + rect.height);
 
     updateGeometry(0, 0, direction);
 }
@@ -59,30 +59,30 @@ void Arrow::updateGeometry(float x, float y, Direction direction)
     const sf::IntRect& rect = Theme::getArrowTextureRect();
     switch (direction)
     {
-        case Top:
-            m_vertices[0].position = sf::Vector2f(x,              y);
-            m_vertices[1].position = sf::Vector2f(x + rect.width, y);
-            m_vertices[2].position = sf::Vector2f(x + rect.width, y + rect.height);
-            m_vertices[3].position = sf::Vector2f(x,              y + rect.height);
-            break;
-        case Bottom:
-            m_vertices[0].position = sf::Vector2f(x + rect.width, y + rect.height);
-            m_vertices[1].position = sf::Vector2f(x,              y + rect.height);
-            m_vertices[2].position = sf::Vector2f(x,              y);
-            m_vertices[3].position = sf::Vector2f(x + rect.width, y);
-            break;
-        case Left:
-            m_vertices[0].position = sf::Vector2f(x,               y + rect.width);
-            m_vertices[1].position = sf::Vector2f(x,               y);
-            m_vertices[2].position = sf::Vector2f(x + rect.height, y);
-            m_vertices[3].position = sf::Vector2f(x + rect.height, y + rect.width);
-            break;
-        case Right:
-            m_vertices[0].position = sf::Vector2f(x + rect.height, y);
-            m_vertices[1].position = sf::Vector2f(x + rect.height, y + rect.width);
-            m_vertices[2].position = sf::Vector2f(x,               y + rect.width);
-            m_vertices[3].position = sf::Vector2f(x,               y);
-            break;
+    case Top:
+        m_vertices[0].position = sf::Vector2f(x, y);
+        m_vertices[1].position = sf::Vector2f(x + rect.width, y);
+        m_vertices[2].position = sf::Vector2f(x + rect.width, y + rect.height);
+        m_vertices[3].position = sf::Vector2f(x, y + rect.height);
+        break;
+    case Bottom:
+        m_vertices[0].position = sf::Vector2f(x + rect.width, y + rect.height);
+        m_vertices[1].position = sf::Vector2f(x, y + rect.height);
+        m_vertices[2].position = sf::Vector2f(x, y);
+        m_vertices[3].position = sf::Vector2f(x + rect.width, y);
+        break;
+    case Left:
+        m_vertices[0].position = sf::Vector2f(x, y + rect.width);
+        m_vertices[1].position = sf::Vector2f(x, y);
+        m_vertices[2].position = sf::Vector2f(x + rect.height, y);
+        m_vertices[3].position = sf::Vector2f(x + rect.height, y + rect.width);
+        break;
+    case Right:
+        m_vertices[0].position = sf::Vector2f(x + rect.height, y);
+        m_vertices[1].position = sf::Vector2f(x + rect.height, y + rect.width);
+        m_vertices[2].position = sf::Vector2f(x, y + rect.width);
+        m_vertices[3].position = sf::Vector2f(x, y);
+        break;
     }
     m_direction = direction;
 }

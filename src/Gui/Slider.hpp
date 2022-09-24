@@ -15,7 +15,11 @@ namespace gui
 class Slider: public Widget
 {
 public:
-    enum Type { Horizontal, Vertical };
+    enum Type
+    {
+        Horizontal,
+        Vertical
+    };
 
     Slider(float length = 200, Type type = Horizontal);
 
@@ -30,7 +34,8 @@ public:
 
     void setValue(int value);
 
-    // callbacks ---------------------------------------------------------------
+protected:
+    // Callbacks
     void onKeyPressed(const sf::Event::KeyEvent& key) override;
     void onMousePressed(float x, float y) override;
     void onMouseMoved(float x, float y) override;
@@ -44,11 +49,11 @@ private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     Type m_type;
-    int  m_step;
-    int  m_value;
-    Box  m_box;
+    int m_step;
+    int m_value;
+    Box m_box;
     sf::Vertex m_progression[4];
-    Box  m_handle;
+    Box m_handle;
 };
 
 }

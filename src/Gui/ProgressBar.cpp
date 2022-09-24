@@ -36,7 +36,7 @@ void ProgressBar::setValue(float value)
     float x = Theme::borderSize + (getSize().x - Theme::borderSize * 2) * value / 100;
     m_bar[1].position.x = m_bar[2].position.x = x;
 
-    m_text.setString(std::to_string((int) value) + "%");
+    m_text.setString(std::to_string((int)value) + "%");
     m_box.centerText(m_text);
 
     m_value = value;

@@ -52,8 +52,8 @@ public:
      */
     void selectPrevious();
 
-    // callbacks ---------------------------------------------------------------
-
+protected:
+    // Callbacks
     void onStateChanged(State state) override;
     void onMouseMoved(float x, float y) override;
     void onMousePressed(float x, float y) override;
@@ -75,13 +75,13 @@ private:
     };
 
     typedef std::vector<Item> ItemVector;
-    ItemVector         m_items;
-    size_t             m_current_index;
+    ItemVector m_items;
+    size_t m_currentIndex;
 
     // Visual components
-    ItemBox<sf::Text>  m_box;
-    ItemBox<Arrow>     m_arrow_left;
-    ItemBox<Arrow>     m_arrow_right;
+    ItemBox<sf::Text> m_box;
+    ItemBox<Arrow> m_arrowLeft;
+    ItemBox<Arrow> m_arrowRight;
 };
 
 }

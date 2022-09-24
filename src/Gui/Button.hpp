@@ -23,8 +23,8 @@ public:
 
     const sf::String& getString() const;
 
-    // callbacks ---------------------------------------------------------------
-
+protected:
+    // Callbacks
     void onStateChanged(State state) override;
     void onMouseMoved(float x, float y) override;
     void onMousePressed(float x, float y) override;

@@ -36,9 +36,9 @@ private:
     void press();
     void release();
 
-    sf::Text   m_text;
+    sf::Text m_text;
     sf::Sprite m_background;
-    bool       m_pressed;
+    bool m_pressed;
 };
 
 }

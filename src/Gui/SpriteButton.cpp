@@ -153,4 +153,3 @@ void SpriteButton::release()
 }
 
 }
-

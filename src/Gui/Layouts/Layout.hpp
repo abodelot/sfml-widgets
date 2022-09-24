@@ -31,8 +31,8 @@ public:
     Widget* add(Widget* widget);
 
     /// Helpers
-    Button*     addButton(const sf::String& string, std::function<void(void)> callback);
-    Label*      addLabel(const sf::String& string);
+    Button* addButton(const sf::String& string, std::function<void(void)> callback);
+    Label* addLabel(const sf::String& string);
     FormLayout* addFormLayout();
     HBoxLayout* addHBoxLayout();
     VBoxLayout* addVBoxLayout();
@@ -50,7 +50,7 @@ protected:
     void onKeyReleased(const sf::Event::KeyEvent& key) override;
     void onTextEntered(sf::Uint32 unicode) override;
 
-    Layout* toLayout() override { return this; } // hack?
+    inline Layout* toLayout() override { return this; }
     bool focusNextWidget();
     bool focusPreviousWidget();
 
@@ -64,10 +64,10 @@ private:
      */
     bool focusWidget(Widget* widget);
 
-    Widget*   m_first;
-    Widget*   m_last;
-    Widget*   m_hover;
-    Widget*   m_focus;
+    Widget* m_first;
+    Widget* m_last;
+    Widget* m_hover;
+    Widget* m_focus;
 };
 
 }

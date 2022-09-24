@@ -63,8 +63,7 @@ void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Label::updateGeometry()
 {
     Widget::setSize(
-        m_text.getLocalBounds().width + Theme::PADDING * 2,
-        m_text.getLocalBounds().height + Theme::PADDING * 2
+        m_text.getLocalBounds().width + Theme::PADDING * 2, m_text.getLocalBounds().height + Theme::PADDING * 2
     );
 }
 

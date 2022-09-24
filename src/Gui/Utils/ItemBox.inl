@@ -18,24 +18,22 @@ ItemBox<T>::ItemBox(const T& item, Box::Type type):
     applyState(StateDefault);
 }
 
-
 template <class T>
 void ItemBox<T>::applyState(State state)
 {
     Box::applyState(state);
     switch (state)
     {
-        case StateDefault:
-            m_item.setFillColor(m_type == Click ? Theme::click.textColor : Theme::input.textColor);
-            break;
-        case StateHovered:
-            m_item.setFillColor(m_type == Click ? Theme::click.textColorHover : Theme::input.textColorHover);
-            break;
-        case StatePressed:
-        case StateFocused:
-            m_item.setFillColor(m_type == Click ? Theme::click.textColorFocus : Theme::input.textColorFocus);
-            break;
-
+    case StateDefault:
+        m_item.setFillColor(m_type == Click ? Theme::click.textColor : Theme::input.textColor);
+        break;
+    case StateHovered:
+        m_item.setFillColor(m_type == Click ? Theme::click.textColorHover : Theme::input.textColorHover);
+        break;
+    case StatePressed:
+    case StateFocused:
+        m_item.setFillColor(m_type == Click ? Theme::click.textColorFocus : Theme::input.textColorFocus);
+        break;
     }
 }
 

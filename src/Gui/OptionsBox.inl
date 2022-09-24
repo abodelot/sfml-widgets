@@ -5,10 +5,10 @@ namespace gui
 
 template <class T>
 OptionsBox<T>::OptionsBox():
-    m_current_index(-1),
+    m_currentIndex(-1),
     m_box(Box::Input),
-    m_arrow_left(Arrow(Arrow::Left)),
-    m_arrow_right(Arrow(Arrow::Right))
+    m_arrowLeft(Arrow(Arrow::Left)),
+    m_arrowRight(Arrow(Arrow::Right))
 {
     // Build visual components
     m_box.item().setFont(Theme::getFont());
@@ -16,13 +16,13 @@ OptionsBox<T>::OptionsBox():
     m_box.setSize(Theme::minWidgetWidth, Theme::getBoxHeight());
 
     // Pack left arrow
-    m_arrow_left.setSize(Theme::getBoxHeight(), Theme::getBoxHeight());
-    m_arrow_left.centerItem(m_arrow_left.item());
+    m_arrowLeft.setSize(Theme::getBoxHeight(), Theme::getBoxHeight());
+    m_arrowLeft.centerItem(m_arrowLeft.item());
 
     // Pack right arrow
-    m_arrow_right.setSize(Theme::getBoxHeight(), Theme::getBoxHeight());
-    m_arrow_right.setPosition(m_box.getSize().x - Theme::getBoxHeight(), 0);
-    m_arrow_right.centerItem(m_arrow_right.item());
+    m_arrowRight.setSize(Theme::getBoxHeight(), Theme::getBoxHeight());
+    m_arrowRight.setPosition(m_box.getSize().x - Theme::getBoxHeight(), 0);
+    m_arrowRight.centerItem(m_arrowRight.item());
 
     // Widget local bounds
     setSize(m_box.getSize());
@@ -40,8 +40,8 @@ void OptionsBox<T>::addItem(const sf::String& label, const T& value)
     if (width > getSize().x)
     {
         m_box.setSize(width, Theme::getBoxHeight());
-        m_arrow_right.setPosition(width - Theme::getBoxHeight(), 0);
-        m_arrow_right.centerItem(m_arrow_right.item());
+        m_arrowRight.setPosition(width - Theme::getBoxHeight(), 0);
+        m_arrowRight.centerItem(m_arrowRight.item());
         setSize(m_box.getSize());
     }
 
@@ -54,7 +54,7 @@ void OptionsBox<T>::selectItem(size_t item_index)
 {
     if (item_index < m_items.size())
     {
-        m_current_index = item_index;
+        m_currentIndex = item_index;
         m_box.item().setString(m_items[item_index].label);
         m_box.centerText(m_box.item());
     }
@@ -64,14 +64,14 @@ void OptionsBox<T>::selectItem(size_t item_index)
 template <class T>
 const T& OptionsBox<T>::getSelectedValue() const
 {
-    return m_items[m_current_index].value;
+    return m_items[m_currentIndex].value;
 }
 
 
 template <class T>
 size_t OptionsBox<T>::getSelectedIndex() const
 {
-    return m_current_index;
+    return m_currentIndex;
 }
 
 
@@ -81,7 +81,7 @@ void OptionsBox<T>::selectNext()
     if (m_items.size() > 1)
     {
         // Get next item index
-        selectItem(m_current_index == (m_items.size() - 1) ? 0 : m_current_index + 1);
+        selectItem(m_currentIndex == (m_items.size() - 1) ? 0 : m_currentIndex + 1);
         triggerCallback();
     }
 }
@@ -93,7 +93,7 @@ void OptionsBox<T>::selectPrevious()
     if (m_items.size() > 1)
     {
         // Get previous item index
-        selectItem(m_current_index == 0 ? m_items.size() - 1 : m_current_index - 1);
+        selectItem(m_currentIndex == 0 ? m_items.size() - 1 : m_currentIndex - 1);
         triggerCallback();
     }
 }
@@ -104,8 +104,8 @@ void OptionsBox<T>::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 {
     states.transform *= getTransform();
     target.draw(m_box, states);
-    target.draw(m_arrow_left, states);
-    target.draw(m_arrow_right, states);
+    target.draw(m_arrowLeft, states);
+    target.draw(m_arrowRight, states);
 }
 
 
@@ -134,8 +134,8 @@ void OptionsBox<T>::onStateChanged(State state)
     // Hovered state is handled in the onMouseMoved callback
     if (state == StateDefault || state == StateFocused)
     {
-        m_arrow_left.applyState(state);
-        m_arrow_right.applyState(state);
+        m_arrowLeft.applyState(state);
+        m_arrowRight.applyState(state);
         m_box.applyState(state);
     }
 }
@@ -144,34 +144,34 @@ void OptionsBox<T>::onStateChanged(State state)
 template <class T>
 void OptionsBox<T>::onMouseMoved(float x, float y)
 {
-    updateArrow(m_arrow_left, x, y);
-    updateArrow(m_arrow_right, x, y);
+    updateArrow(m_arrowLeft, x, y);
+    updateArrow(m_arrowRight, x, y);
 }
 
 
 template <class T>
 void OptionsBox<T>::onMousePressed(float x, float y)
 {
-    if (m_arrow_left.containsPoint(x, y))
-        m_arrow_left.press();
+    if (m_arrowLeft.containsPoint(x, y))
+        m_arrowLeft.press();
 
-    else if (m_arrow_right.containsPoint(x, y))
-        m_arrow_right.press();
+    else if (m_arrowRight.containsPoint(x, y))
+        m_arrowRight.press();
 }
 
 
 template <class T>
 void OptionsBox<T>::onMouseReleased(float x, float y)
 {
-    if (m_arrow_left.containsPoint(x, y))
+    if (m_arrowLeft.containsPoint(x, y))
     {
         selectPrevious();
-        m_arrow_left.release();
+        m_arrowLeft.release();
     }
-    else if (m_arrow_right.containsPoint(x, y))
+    else if (m_arrowRight.containsPoint(x, y))
     {
         selectNext();
-        m_arrow_right.release();
+        m_arrowRight.release();
     }
 }
 
@@ -182,12 +182,12 @@ void OptionsBox<T>::onKeyPressed(const sf::Event::KeyEvent& key)
     if (key.code == sf::Keyboard::Left)
     {
         selectPrevious();
-        m_arrow_left.press();
+        m_arrowLeft.press();
     }
     else if (key.code == sf::Keyboard::Right)
     {
         selectNext();
-        m_arrow_right.press();
+        m_arrowRight.press();
     }
 }
 
@@ -197,11 +197,11 @@ void OptionsBox<T>::onKeyReleased(const sf::Event::KeyEvent& key)
 {
     if (key.code == sf::Keyboard::Left)
     {
-        m_arrow_left.release();
+        m_arrowLeft.release();
     }
     else if (key.code == sf::Keyboard::Right)
     {
-        m_arrow_right.release();
+        m_arrowRight.release();
     }
 }
 

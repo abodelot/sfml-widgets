@@ -78,16 +78,16 @@ private:
      */
     void deleteSelectedText();
 
-    sf::Text    m_text;
-    sf::Text    m_placeholder;
-    Box         m_box;
+    sf::Text m_text;
+    sf::Text m_placeholder;
+    Box m_box;
     mutable sf::RectangleShape m_cursor;
-    mutable sf::Clock  m_cursorTimer;
-    size_t             m_cursorPos;
-    size_t             m_maxLength;
-    size_t  m_selectionFirst;
-    size_t  m_selectionLast;
-    sf::String  m_selectedText;
+    mutable sf::Clock m_cursorTimer;
+    size_t m_cursorPos;
+    size_t m_maxLength;
+    size_t m_selectionFirst;
+    size_t m_selectionLast;
+    sf::String m_selectedText;
 };
 
 }

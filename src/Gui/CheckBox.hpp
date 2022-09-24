@@ -21,8 +21,8 @@ public:
 
     void check(bool checked);
 
-    // callbacks ---------------------------------------------------------------
-
+protected:
+    // Callbacks
     void onStateChanged(State state) override;
     void onMouseReleased(float x, float y) override;
     void onKeyPressed(const sf::Event::KeyEvent& key) override;
@@ -30,9 +30,9 @@ public:
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    Box   m_box;
+    Box m_box;
     Cross m_cross;
-    bool  m_checked;
+    bool m_checked;
 };
 
 }

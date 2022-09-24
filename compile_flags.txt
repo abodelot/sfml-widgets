@@ -1,0 +1,6 @@
+-I./src
+-std=c++11
+-Wall
+-Wextra
+-Wshadow
+-Wwrite-strings

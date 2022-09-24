@@ -53,14 +53,14 @@ public:
     void centerItem(T& item)
     {
         sf::Vector2f size = getSize();
-        sf::Vector2f item_size = item.getSize();
+        sf::Vector2f itemSize = item.getSize();
         // Center item
-        item.setPosition(int(getPosition().x + (size.x - item_size.x) / 2),
-                         int(getPosition().y + (size.y - item_size.y) / 2));
+        item.setPosition(
+            int(getPosition().x + (size.x - itemSize.x) / 2), int(getPosition().y + (size.y - itemSize.y) / 2)
+        );
     }
 
     void centerText(sf::Text& item);
-
 
 protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -69,6 +69,7 @@ protected:
     virtual void onRelease() {};
 
     Type m_type;
+
 private:
     enum Slice
     {

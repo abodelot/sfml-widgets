@@ -94,15 +94,14 @@ void TextBox::setCursor(size_t index)
             m_cursor.move(diff, 0);
         }
 
-        float text_width = m_text.getLocalBounds().width;
-        if (m_text.getPosition().x < padding
-            && m_text.getPosition().x + text_width < getSize().x - padding)
+        float textWidth = m_text.getLocalBounds().width;
+        if (m_text.getPosition().x < padding && m_text.getPosition().x + textWidth < getSize().x - padding)
         {
-            float diff = (getSize().x - padding) - (m_text.getPosition().x + text_width);
+            float diff = (getSize().x - padding) - (m_text.getPosition().x + textWidth);
             m_text.move(diff, 0);
             m_cursor.move(diff, 0);
             // If text is smaller than the textbox, force align on left
-            if (text_width < (getSize().x - padding * 2))
+            if (textWidth < (getSize().x - padding * 2))
             {
                 diff = padding - m_text.getPosition().x;
                 m_text.move(diff, 0);
@@ -132,7 +131,7 @@ void TextBox::onKeyPressed(const sf::Event::KeyEvent& key)
         break;
 
     case sf::Keyboard::BackSpace:
-        if(!m_selectedText.isEmpty())
+        if (!m_selectedText.isEmpty())
         {
             deleteSelectedText();
             break;
@@ -149,7 +148,7 @@ void TextBox::onKeyPressed(const sf::Event::KeyEvent& key)
         break;
 
     case sf::Keyboard::Delete:
-        if(!m_selectedText.isEmpty())
+        if (!m_selectedText.isEmpty())
         {
             deleteSelectedText();
             break;
@@ -177,8 +176,9 @@ void TextBox::onKeyPressed(const sf::Event::KeyEvent& key)
         triggerCallback();
         break;
 
+    // Ctrl+A: select all
     case sf::Keyboard::A:
-        if(key.control)
+        if (key.control)
         {
             setSelectedText(0, m_text.getString().getSize());
         }
@@ -204,20 +204,22 @@ void TextBox::onKeyPressed(const sf::Event::KeyEvent& key)
         }
         break;
 
+    // Ctrl+C: copy selected text to clipboard
     case sf::Keyboard::C:
-        if(key.control)
+        if (key.control)
         {
-            if(!m_selectedText.isEmpty())
+            if (!m_selectedText.isEmpty())
             {
                 sf::Clipboard::setString(m_selectedText);
             }
         }
         break;
 
+    // Ctrl+X: cut selected text to clipboard
     case sf::Keyboard::X:
-        if(key.control)
+        if (key.control)
         {
-            if(!m_selectedText.isEmpty())
+            if (!m_selectedText.isEmpty())
             {
                 sf::Clipboard::setString(m_selectedText);
                 deleteSelectedText();
@@ -236,8 +238,8 @@ void TextBox::onMousePressed(float x, float)
     for (int i = m_text.getString().getSize(); i >= 0; --i)
     {
         // Place cursor after the character under the mouse
-        sf::Vector2f glyph_pos = m_text.findCharacterPos(i);
-        if (glyph_pos.x <= x)
+        sf::Vector2f glyphPos = m_text.findCharacterPos(i);
+        if (glyphPos.x <= x)
         {
             setCursor(i);
             break;
@@ -246,13 +248,13 @@ void TextBox::onMousePressed(float x, float)
 }
 
 
-void TextBox::onMouseReleased(float x, float y)
+void TextBox::onMouseReleased(float x, float)
 {
     for (int i = m_text.getString().getSize(); i >= 0; --i)
     {
         // Place cursor after the character under the mouse
-        sf::Vector2f glyph_pos = m_text.findCharacterPos(i);
-        if (glyph_pos.x <= x)
+        sf::Vector2f glyphPos = m_text.findCharacterPos(i);
+        if (glyphPos.x <= x)
         {
             setSelectedText(m_cursorPos, i);
             setCursor(i);
@@ -262,15 +264,15 @@ void TextBox::onMouseReleased(float x, float y)
 }
 
 
-void TextBox::onMouseMoved(float x, float y)
+void TextBox::onMouseMoved(float x, float)
 {
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         for (int i = m_text.getString().getSize(); i >= 0; --i)
         {
             // Place cursor after the character under the mouse
-            sf::Vector2f glyph_pos = m_text.findCharacterPos(i);
-            if (glyph_pos.x <= x)
+            sf::Vector2f glyphPos = m_text.findCharacterPos(i);
+            if (glyphPos.x <= x)
             {
                 setSelectedText(m_cursorPos, i);
                 break;
@@ -303,9 +305,9 @@ void TextBox::onStateChanged(State state)
     m_box.applyState(state);
 
     // Discard selection when focus is lost
-    if(state != State::StateFocused)
+    if (state != State::StateFocused)
     {
-        setSelectedText(0,0);
+        setSelectedText(0, 0);
     }
 }
 
@@ -321,18 +323,19 @@ void TextBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
     sf::Vector2f pos = getAbsolutePosition();
     glScissor(pos.x + Theme::borderSize, target.getSize().y - (pos.y + getSize().y), getSize().x, getSize().y);
 
-    if(m_text.getString().isEmpty())
+    if (m_text.getString().isEmpty())
     {
         target.draw(m_placeholder, states);
     }
     else
     {
         // Draw selection indicator
-        if(!m_selectedText.isEmpty())
+        if (!m_selectedText.isEmpty())
         {
             sf::RectangleShape selRect;
-            selRect.setPosition(m_text.findCharacterPos(m_selectionFirst));
-            selRect.setSize({m_text.findCharacterPos(m_selectionLast).x - m_text.findCharacterPos(m_selectionFirst).x, m_cursor.getSize().y});
+            const sf::Vector2f& startPos = m_text.findCharacterPos(m_selectionFirst);
+            selRect.setPosition(startPos);
+            selRect.setSize({m_text.findCharacterPos(m_selectionLast).x - startPos.x, m_cursor.getSize().y});
             selRect.setFillColor(Theme::input.textSelectionColor);
             target.draw(selRect, states);
         }
@@ -361,7 +364,7 @@ void TextBox::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void TextBox::setSelectedText(size_t from, size_t to)
 {
-    if(from != to)
+    if (from != to)
     {
         m_selectionLast = std::max(from, to);
         m_selectionFirst = std::min(from, to);
@@ -383,12 +386,12 @@ const sf::String& TextBox::getSelectedText() const
 void TextBox::deleteSelectedText()
 {
     // Delete if any selected text
-    if(!m_selectedText.isEmpty())
+    if (!m_selectedText.isEmpty())
     {
         sf::String str = m_text.getString();
         str.erase(m_selectionFirst, m_selectionLast - m_selectionFirst);
         setCursor(m_selectionFirst);
-        setSelectedText(0,0);
+        setSelectedText(0, 0);
         m_text.setString(str);
     }
 }

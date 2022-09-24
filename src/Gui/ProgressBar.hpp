@@ -23,10 +23,10 @@ public:
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    Box        m_box;
+    Box m_box;
     sf::Vertex m_bar[4];
-    sf::Text   m_text;
-    float      m_value;
+    sf::Text m_text;
+    float m_value;
 };
 
 }

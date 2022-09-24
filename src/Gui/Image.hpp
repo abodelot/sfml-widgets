@@ -23,7 +23,7 @@ public:
 private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    sf::Vertex         m_vertices[4];
+    sf::Vertex m_vertices[4];
     const sf::Texture* m_texture;
 };
 

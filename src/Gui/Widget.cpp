@@ -20,9 +20,10 @@ void Widget::setPosition(const sf::Vector2f& pos)
 {
     m_position = pos;
     m_transform = sf::Transform(
-        1, 0, (int) pos.x,
-        0, 1, (int) pos.y,
-        0, 0, 1);
+        1, 0, (int)pos.x, // translate x
+        0, 1, (int)pos.y, // translate y
+        0, 0, 1
+    );
 }
 
 
@@ -75,8 +76,7 @@ const sf::Vector2f& Widget::getSize() const
 
 bool Widget::containsPoint(const sf::Vector2f& point) const
 {
-    return point.x > 0.f && point.x < m_size.x &&
-           point.y > 0.f && point.y < m_size.y;
+    return point.x > 0.f && point.x < m_size.x && point.y > 0.f && point.y < m_size.y;
 }
 
 
@@ -147,13 +147,13 @@ void Widget::centerText(sf::Text& text)
 
 // callbacks -------------------------------------------------------------------
 
-void Widget::onStateChanged(State) {}
-void Widget::onMouseMoved(float, float) {}
-void Widget::onMousePressed(float, float) {}
-void Widget::onMouseReleased(float, float) {}
-void Widget::onMouseWheelMoved(int) {}
-void Widget::onKeyPressed(const sf::Event::KeyEvent&) {}
-void Widget::onKeyReleased(const sf::Event::KeyEvent&) {}
-void Widget::onTextEntered(sf::Uint32) {}
+void Widget::onStateChanged(State) { }
+void Widget::onMouseMoved(float, float) { }
+void Widget::onMousePressed(float, float) { }
+void Widget::onMouseReleased(float, float) { }
+void Widget::onMouseWheelMoved(int) { }
+void Widget::onKeyPressed(const sf::Event::KeyEvent&) { }
+void Widget::onKeyReleased(const sf::Event::KeyEvent&) { }
+void Widget::onTextEntered(sf::Uint32) { }
 
 }

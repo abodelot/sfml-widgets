@@ -7,14 +7,17 @@
 namespace gui
 {
 
+/**
+ * Entry point for the GUI.
+ * A Menu is a VBoxLayout with a general onEvent handler
+ */
 class Menu: public gui::VBoxLayout
 {
 public:
     Menu(sf::RenderTarget& window);
 
     /**
-     * Handle event and send it to widgets
-     * @return triggered widget ID, or -1 if none
+     * Handle an SFML event and send it to widgets
      */
     void onEvent(const sf::Event& event);
 

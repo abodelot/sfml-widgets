@@ -3,14 +3,14 @@
 namespace gui
 {
 
-size_t    Theme::textSize = 12;
+size_t Theme::textSize = 12;
 Theme::Style Theme::click;
 Theme::Style Theme::input;
 sf::Color Theme::windowBgColor;
-int       Theme::borderSize      = 1.f;
-int       Theme::minWidgetWidth  = 86;
-float     Theme::PADDING          = 1.f;
-float     Theme::MARGIN           = 7.f;
+int Theme::borderSize = 1.f;
+int Theme::minWidgetWidth = 86;
+float Theme::PADDING = 1.f;
+float Theme::MARGIN = 7.f;
 
 sf::Keyboard::Key Theme::nextWidgetKey = sf::Keyboard::Down;
 sf::Keyboard::Key Theme::previousWidgetKey = sf::Keyboard::Up;
@@ -64,18 +64,18 @@ const sf::IntRect& Theme::getTextureRect(Box::Type type, State state)
     TextureID id(BOX_DEFAULT);
     switch (state)
     {
-        case StateDefault:
-            id = type == Box::Click ? BOX_DEFAULT : BOX_INPUT_DEFAULT;
-            break;
-        case StateHovered:
-            id = type == Box::Click ? BOX_HOVERED : BOX_INPUT_DEFAULT;
-            break;
-        case StatePressed:
-            id = type == Box::Click ? BOX_PRESSED : BOX_INPUT_FOCUSED;
-            break;
-        case StateFocused:
-            id = type == Box::Click ? BOX_FOCUSED : BOX_INPUT_FOCUSED;
-            break;
+    case StateDefault:
+        id = type == Box::Click ? BOX_DEFAULT : BOX_INPUT_DEFAULT;
+        break;
+    case StateHovered:
+        id = type == Box::Click ? BOX_HOVERED : BOX_INPUT_DEFAULT;
+        break;
+    case StatePressed:
+        id = type == Box::Click ? BOX_PRESSED : BOX_INPUT_FOCUSED;
+        break;
+    case StateFocused:
+        id = type == Box::Click ? BOX_FOCUSED : BOX_INPUT_FOCUSED;
+        break;
     }
     return m_subrects[id];
 }

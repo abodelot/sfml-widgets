@@ -9,13 +9,20 @@ namespace gui
 class Arrow: public sf::Drawable
 {
 public:
-    enum Direction { Left, Right, Top, Bottom };
+    enum Direction
+    {
+        Left,
+        Right,
+        Top,
+        Bottom
+    };
 
     Arrow(Direction direction);
 
     void setFillColor(const sf::Color& color);
 
     void move(float dx, float dy);
+
     void setPosition(float x, float y);
 
     sf::Vector2f getSize() const;
