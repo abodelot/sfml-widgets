@@ -14,11 +14,9 @@ Box::Box(Type type):
 
 // Geometry --------------------------------------------------------------------
 
-
 const sf::Vector2f& Box::getPosition() const
 {
     return m_vertices[TOP_LEFT].position;
-    //return m_background[0].position;
 }
 
 
@@ -27,32 +25,26 @@ void Box::setPosition(float x, float y)
     sf::Vector2f diff = sf::Vector2f(x, y) - getPosition();
     for (size_t i = 0; i < VERTEX_COUNT; ++i)
         m_vertices[i].position += diff;
-
-    /*for (int i = 0; i < 4; ++i)
-        m_background[i].position += diff;
-    for (int i = 0; i < 16; ++i)
-        m_borders[i].position += diff;
-    */
 }
 
 
-void Box::setTextureCoords(int index, float x, float y)
+void Box::setSliceTextureCoords(Slice slice, float x, float y)
 {
-    index *= 4;
-    m_vertices[index].texCoords =   sf::Vector2f(x, y);
+    int index = slice * 4;
+    m_vertices[index].texCoords = sf::Vector2f(x, y);
     m_vertices[++index].texCoords = sf::Vector2f(x + Theme::borderSize, y);
     m_vertices[++index].texCoords = sf::Vector2f(x + Theme::borderSize, y + Theme::borderSize);
     m_vertices[++index].texCoords = sf::Vector2f(x, y + Theme::borderSize);
 }
 
 
-void Box::setTexturePos(int index, float x, float y, float w, float h)
+void Box::setSliceGeometry(Slice slice, float x1, float y1, float x2, float y2)
 {
-    index *= 4;
-    m_vertices[index].position = sf::Vector2f(x, y);
-    m_vertices[++index].position = sf::Vector2f(x + w, y);
-    m_vertices[++index].position = sf::Vector2f(x + w, y + h);
-    m_vertices[++index].position = sf::Vector2f(x, y + h);
+    int index = slice * 4;
+    m_vertices[index].position = sf::Vector2f(x1, y1);
+    m_vertices[++index].position = sf::Vector2f(x2, y1);
+    m_vertices[++index].position = sf::Vector2f(x2, y2);
+    m_vertices[++index].position = sf::Vector2f(x1, y2);
 }
 
 
@@ -61,58 +53,36 @@ void Box::setSize(float width, float height)
     if (width <= 0 || height <= 0)
         return;
 
-    float innerWidth = width - Theme::borderSize * 2;
-    float innerHeight = height - Theme::borderSize * 2;
-
-    setTexturePos(TOP_LEFT,     0, 0, Theme::borderSize, Theme::borderSize);
-    setTexturePos(TOP,          Theme::borderSize, 0, innerWidth, Theme::borderSize);
-    setTexturePos(TOP_RIGHT,    Theme::borderSize + innerWidth, 0, Theme::borderSize, Theme::borderSize);
-    setTexturePos(LEFT,         0, Theme::borderSize, Theme::borderSize, innerHeight);
-    setTexturePos(MIDDLE,       Theme::borderSize, Theme::borderSize, innerWidth, innerHeight);
-    setTexturePos(RIGHT,        Theme::borderSize + innerWidth, Theme::borderSize, Theme::borderSize, innerHeight);
-    setTexturePos(BOTTOM_LEFT,  0, Theme::borderSize + innerHeight, Theme::borderSize, Theme::borderSize);
-    setTexturePos(BOTTOM,       Theme::borderSize, Theme::borderSize + innerHeight, innerWidth, Theme::borderSize);
-    setTexturePos(BOTTOM_RIGHT, Theme::borderSize + innerWidth, Theme::borderSize + innerHeight, Theme::borderSize, Theme::borderSize);
-
-
-    /*// Body
-    float border = Theme::BORDER_SIZE;
-
-    m_background[0].position = {0.f,   0.f};
-    m_background[1].position = {width, 0.f};
-    m_background[2].position = {width, height};
-    m_background[3].position = {0.f,   height};
-
-    // Borders
-    m_borders[0].position = {0.f, 0.f};
-    m_borders[1].position = {border, 0.f};
-    m_borders[2].position = {border, height - border};
-    m_borders[3].position = {0.f, height - border};
-
-    m_borders[4].position = {border, 0.f};
-    m_borders[5].position = {width, 0.f};
-    m_borders[6].position = {width, border};
-    m_borders[7].position = {border, border};
-
-    m_borders[8].position = {width - border, border};
-    m_borders[9].position = {width, border};
-    m_borders[10].position = {width, height};
-    m_borders[11].position = {width - border, height};
-
-    m_borders[12].position = {0.f, height - border};
-    m_borders[13].position = {width - border, height - border};
-    m_borders[14].position = {width - border, height};
-    m_borders[15].position = {0.f, height};*/
+    // Move/resize each of the 9 slices
+    // 0--x1--x2--x3
+    // |   |   |   |
+    // y1--+---+---+
+    // |   |   |   |
+    // y2--+---+---+
+    // |   |   |   |
+    // y3--+---+---+
+    float x1 = Theme::borderSize;
+    float x2 = width - Theme::borderSize;
+    float x3 = width;
+    float y1 = Theme::borderSize;
+    float y2 = height - Theme::borderSize;
+    float y3 = height;
+    setSliceGeometry(TOP_LEFT, 0, 0, x1, y1);
+    setSliceGeometry(TOP, x1, 0, x2, y1);
+    setSliceGeometry(TOP_RIGHT, x2, 0, x3, y1);
+    setSliceGeometry(LEFT, 0, y1, x1, y2);
+    setSliceGeometry(MIDDLE, x1, y1, x2, y2);
+    setSliceGeometry(RIGHT, x2, y1, x3, y2);
+    setSliceGeometry(BOTTOM_LEFT, 0, y2, x1, y3);
+    setSliceGeometry(BOTTOM, x1, y2, x2, y3);
+    setSliceGeometry(BOTTOM_RIGHT, x2, y2, x3, y3);
 }
 
 
 sf::Vector2f Box::getSize() const
 {
-
-
     // Bottom right corner - top left corner
     return m_vertices[BOTTOM_RIGHT * 4 + 2].position - getPosition();
-    //return m_background[2].position - m_background[0].position;
 }
 
 
@@ -130,23 +100,14 @@ void Box::release()
 
 bool Box::containsPoint(float x, float y) const
 {
-// TODO:
-    return x > m_vertices[0].position.x
-        && x < m_vertices[BOTTOM_RIGHT * 4 + 2].position.x
-        && y > m_vertices[0].position.y
-        && y < m_vertices[BOTTOM_RIGHT * 4 + 2].position.y;
-
-    /*return x >= m_background[0].position.x  // Left
-        && x <= m_background[2].position.x  // Right
-        && y >= m_background[0].position.y  // Top
-        && y <= m_background[2].position.y; // Bottom*/
+    return x > m_vertices[0].position.x && x < m_vertices[BOTTOM_RIGHT * 4 + 2].position.x
+        && y > m_vertices[0].position.y && y < m_vertices[BOTTOM_RIGHT * 4 + 2].position.y;
 }
 
 // Visual properties -----------------------------------------------------------
 
 void Box::applyState(State state)
 {
-
     if (state == m_state || (state == StateHovered && m_state == StateFocused))
         return;
 
@@ -156,15 +117,15 @@ void Box::applyState(State state)
     float width = Theme::borderSize;
     float height = Theme::borderSize;
 
-    setTextureCoords(TOP_LEFT,     x,             y);
-    setTextureCoords(TOP,          x + width,     y);
-    setTextureCoords(TOP_RIGHT,    x + width * 2, y);
-    setTextureCoords(LEFT,         x,             y + height);
-    setTextureCoords(MIDDLE,       x + width,     y + height);
-    setTextureCoords(RIGHT,        x + width * 2, y + height);
-    setTextureCoords(BOTTOM_LEFT,  x,             y + height * 2);
-    setTextureCoords(BOTTOM,       x + width,     y + height * 2);
-    setTextureCoords(BOTTOM_RIGHT, x + width * 2, y + height * 2);
+    setSliceTextureCoords(TOP_LEFT, x, y);
+    setSliceTextureCoords(TOP, x + width, y);
+    setSliceTextureCoords(TOP_RIGHT, x + width * 2, y);
+    setSliceTextureCoords(LEFT, x, y + height);
+    setSliceTextureCoords(MIDDLE, x + width, y + height);
+    setSliceTextureCoords(RIGHT, x + width * 2, y + height);
+    setSliceTextureCoords(BOTTOM_LEFT, x, y + height * 2);
+    setSliceTextureCoords(BOTTOM, x + width, y + height * 2);
+    setSliceTextureCoords(BOTTOM_RIGHT, x + width * 2, y + height * 2);
 
     if (m_state == StatePressed)
     {
@@ -175,66 +136,15 @@ void Box::applyState(State state)
         onPress();
     }
     m_state = state;
-    /*switch (state)
-    {
-        case StateDefault:
-            // Restore default colors
-            //setBodyColor(m_type == Click ? Theme::normal.bgColor : Theme::normal.bgColorInput);
-            //setBorderColor(Theme::BorderColorLight, Theme::BorderColorDark);
-
-            release();
-            break;
-
-        case StateHovered:
-            //setBodyColor(m_type == Click ? Theme::hover.bgColor : Theme::hover.bgColorInput);
-            //setBorderColor(Theme::BorderColorLight, Theme::BorderColorDark);
-            release();
-            break;
-
-        case StatePressed:
-            press();
-            break;
-
-        case StateFocused:
-//            setBodyColor(m_type == Click ? Theme::focus.bgColor : Theme::focus.bgColorInput);
-    //        setBorderColor(Theme::BorderColorLight, Theme::BorderColorDark);
-            release();
-            break;
-
-    }*/
 }
-
 
 
 void Box::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.texture = &Theme::getTexture();
     target.draw(m_vertices, VERTEX_COUNT, sf::Quads, states);
-    //target.draw(m_background, 4, sf::Quads, states);
-    //target.draw(m_borders, 16, sf::Quads, states);
 }
 
-
-/*
-void Box::setBodyColor(const sf::Color& color)
-{
-    for (size_t i = 0; i < 4; ++i)
-        m_background[i].color = color;
-}
-
-
-void Box::setBorderColor(const sf::Color& up, const sf::Color& down)
-{
-    sf::Color first = m_type == Click ? up : down;
-    sf::Color second = m_type == Click ? down : up;
-
-    for (size_t i = 0; i < 16; ++i)
-    {
-        m_borders[i].color = i < 8 ? first : second;
-    }
-}
-*/
-//
 
 void Box::centerText(sf::Text& text)
 {

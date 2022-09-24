@@ -10,7 +10,6 @@ namespace gui
 /**
  * Utility class used by widgets for holding visual components
  */
-
 class Box: public sf::Drawable
 {
 public:
@@ -71,7 +70,7 @@ protected:
 
     Type m_type;
 private:
-    enum
+    enum Slice
     {
         TOP_LEFT,
         TOP,
@@ -84,21 +83,23 @@ private:
         BOTTOM_RIGHT
     };
 
-    void setTextureCoords(int index, float x, float y);
+    /**
+     * Set the texture coords for one of the 9 slices
+     */
+    void setSliceTextureCoords(Slice slice, float x, float y);
 
-    void setTexturePos(int index, float x, float y, float w, float h);
-
-    //void setBodyColor(const sf::Color& color);
-
-    //void setBorderColor(const sf::Color&, const sf::Color&);
+    /**
+     * Set the geometry for one of the 9 slices
+     */
+    void setSliceGeometry(Slice slice, float x1, float y1, float x2, float y2);
 
     State m_state;
-    static const size_t VERTEX_COUNT = 9 * 4;
+
+    // The box is a 9-slices plane, 4 vertices per slice
+    static constexpr size_t VERTEX_COUNT = 9 * 4;
     sf::Vertex m_vertices[VERTEX_COUNT];
 };
 
-
 }
-
 
 #endif // GUI_BOX_HPP
