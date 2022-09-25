@@ -64,6 +64,8 @@ public:
 protected:
     // Callbacks
     void onKeyPressed(const sf::Event::KeyEvent& key) override;
+    void onMouseEnter() override;
+    void onMouseLeave() override;
     void onMousePressed(float x, float y) override;
     void onMouseReleased(float x, float y) override;
     void onMouseMoved(float x, float y) override;

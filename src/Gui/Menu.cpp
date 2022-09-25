@@ -4,8 +4,9 @@
 namespace gui
 {
 
-Menu::Menu(sf::RenderTarget& window):
-    m_window(window)
+Menu::Menu(sf::RenderWindow& window):
+    m_window(window),
+    m_cursorType(sf::Cursor::Arrow)
 {
 }
 
@@ -64,6 +65,17 @@ sf::Vector2f Menu::convertMousePosition(int x, int y) const
     sf::Vector2f mouse = m_window.mapPixelToCoords(sf::Vector2i(x, y));
     mouse -= getPosition();
     return mouse;
+}
+
+
+void Menu::setMouseCursor(sf::Cursor::Type cursorType)
+{
+    if (cursorType != m_cursorType)
+    {
+        gui::Theme::cursor.loadFromSystem(cursorType);
+        m_window.setMouseCursor(gui::Theme::cursor);
+        m_cursorType = cursorType;
+    }
 }
 
 }

@@ -63,6 +63,8 @@ public:
 protected:
     // Callbacks
     virtual void onStateChanged(State state);
+    virtual void onMouseEnter();
+    virtual void onMouseLeave();
     virtual void onMouseMoved(float x, float y);
     virtual void onMousePressed(float x, float y);
     virtual void onMouseReleased(float x, float y);
@@ -106,6 +108,8 @@ protected:
     virtual void recomputeGeometry() {};
 
     const sf::Transform& getTransform() const;
+
+    virtual void setMouseCursor(sf::Cursor::Type cursor);
 
 private:
     Layout* m_parent;

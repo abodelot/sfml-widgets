@@ -136,7 +136,10 @@ void Layout::onMouseMoved(float x, float y)
                 {
                     // A new widget is hovered
                     if (m_hover != nullptr)
+                    {
                         m_hover->setState(StateDefault);
+                        m_hover->onMouseLeave();
+                    }
 
                     m_hover = widget;
                     // Don't send Hovered state if widget is already focused
@@ -144,6 +147,7 @@ void Layout::onMouseMoved(float x, float y)
                     {
                         widget->setState(StateHovered);
                     }
+                    widget->onMouseEnter();
                 }
                 else
                 {
@@ -158,6 +162,7 @@ void Layout::onMouseMoved(float x, float y)
         {
             m_hover->onMouseMoved(x, y);
             m_hover->setState(m_focus == m_hover ? StateFocused : StateDefault);
+            m_hover->onMouseLeave();
             m_hover = nullptr;
         }
     }
@@ -289,21 +294,18 @@ bool Layout::focusPreviousWidget()
     Widget* start = m_focus != nullptr ? m_focus->m_previous : m_last;
     for (Widget* widget = start; widget != nullptr; widget = widget->m_previous)
     {
-        if (widget != nullptr)
+        Layout* container = widget->toLayout();
+        if (container != nullptr)
         {
-            Layout* container = widget->toLayout();
-            if (container != nullptr)
+            if (container->focusPreviousWidget())
             {
-                if (container->focusPreviousWidget())
-                {
-                    focusWidget(container);
-                    return true;
-                }
-            }
-            else if (focusWidget(widget))
-            {
+                focusWidget(container);
                 return true;
             }
+        }
+        else if (focusWidget(widget))
+        {
+            return true;
         }
     }
 
@@ -326,21 +328,18 @@ bool Layout::focusNextWidget()
     Widget* start = m_focus != nullptr ? m_focus->m_next : m_first;
     for (Widget* widget = start; widget != nullptr; widget = widget->m_next)
     {
-        if (widget != nullptr)
+        Layout* container = widget->toLayout();
+        if (container != nullptr)
         {
-            Layout* container = widget->toLayout();
-            if (container != nullptr)
+            if (container->focusNextWidget())
             {
-                if (container->focusNextWidget())
-                {
-                    focusWidget(container);
-                    return true;
-                }
-            }
-            else if (focusWidget(widget))
-            {
+                focusWidget(container);
                 return true;
             }
+        }
+        else if (focusWidget(widget))
+        {
+            return true;
         }
     }
 

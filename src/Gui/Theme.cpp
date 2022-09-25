@@ -3,6 +3,13 @@
 namespace gui
 {
 
+static sf::Cursor& getDefaultCursor()
+{
+    static sf::Cursor cursor;
+    cursor.loadFromSystem(sf::Cursor::Arrow);
+    return cursor;
+}
+
 size_t Theme::textSize = 12;
 Theme::Style Theme::click;
 Theme::Style Theme::input;
@@ -19,6 +26,7 @@ sf::Font Theme::m_font;
 sf::Texture Theme::m_texture;
 sf::IntRect Theme::m_subrects[_TEXTURE_ID_COUNT];
 
+sf::Cursor& Theme::cursor = getDefaultCursor();
 
 bool Theme::loadFont(const std::string& filename)
 {

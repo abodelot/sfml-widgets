@@ -14,7 +14,7 @@ namespace gui
 class Menu: public gui::VBoxLayout
 {
 public:
-    Menu(sf::RenderTarget& window);
+    Menu(sf::RenderWindow& window);
 
     /**
      * Handle an SFML event and send it to widgets
@@ -30,7 +30,13 @@ private:
      */
     sf::Vector2f convertMousePosition(int x, int y) const;
 
-    sf::RenderTarget& m_window;
+    /**
+     * Update the cursor type on the RenderWindow
+     */
+    void setMouseCursor(sf::Cursor::Type cursorType) override;
+
+    sf::RenderWindow& m_window;
+    sf::Cursor::Type m_cursorType;
 };
 
 }

@@ -67,6 +67,9 @@ public:
     static sf::Keyboard::Key previousWidgetKey;
     static sf::Keyboard::Key nextWidgetKey;
 
+    // Auto-initialized to default cursor
+    static sf::Cursor& cursor;
+
 private:
     enum TextureID
     {

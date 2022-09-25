@@ -233,6 +233,18 @@ void TextBox::onKeyPressed(const sf::Event::KeyEvent& key)
 }
 
 
+void TextBox::onMouseEnter()
+{
+    setMouseCursor(sf::Cursor::Text);
+}
+
+
+void TextBox::onMouseLeave()
+{
+    setMouseCursor(sf::Cursor::Arrow);
+}
+
+
 void TextBox::onMousePressed(float x, float)
 {
     for (int i = m_text.getString().getSize(); i >= 0; --i)

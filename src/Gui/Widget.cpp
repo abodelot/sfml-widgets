@@ -138,6 +138,15 @@ const sf::Transform& Widget::getTransform() const
 }
 
 
+void Widget::setMouseCursor(sf::Cursor::Type cursor)
+{
+    // Propagate the mouse cursor to the parent, until it reaches the top-level Menu widget
+    // (Menu is the only widget that can change the mouse cursor on the RenderWindow)
+    if (m_parent)
+        m_parent->setMouseCursor(cursor);
+}
+
+
 void Widget::centerText(sf::Text& text)
 {
     sf::FloatRect r = text.getLocalBounds();
@@ -148,6 +157,8 @@ void Widget::centerText(sf::Text& text)
 // callbacks -------------------------------------------------------------------
 
 void Widget::onStateChanged(State) { }
+void Widget::onMouseEnter() { }
+void Widget::onMouseLeave() { }
 void Widget::onMouseMoved(float, float) { }
 void Widget::onMousePressed(float, float) { }
 void Widget::onMouseReleased(float, float) { }
