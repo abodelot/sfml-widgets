@@ -30,14 +30,16 @@ struct Theme
 
 int main()
 {
-    Theme defaultTheme = {
+    Theme defaultTheme =
+    {
         hex2color("#dddbde"),
-        "demo/texture-default.png"
+        "resource/texture-default.png"
     };
 
-    Theme win98Theme = {
+    Theme win98Theme =
+    {
         hex2color("#d4d0c8"),
-        "demo/texture-win98.png"
+        "resource/texture-win98.png"
     };
 
     // Create the main window
@@ -46,7 +48,7 @@ int main()
     gui::Menu menu(app);
     menu.setPosition(10, 10);
 
-    gui::Theme::loadFont("demo/tahoma.ttf");
+    gui::Theme::loadFont("resource/tahoma.ttf");
     gui::Theme::loadTexture(defaultTheme.texturePath);
     gui::Theme::textSize = 11;
     gui::Theme::click.textColor      = hex2color("#191B18");
@@ -70,7 +72,8 @@ int main()
     // Textbox
     gui::TextBox* textbox = new gui::TextBox();
     textbox->setText("Hello world!");
-    textbox->setCallback([&]() {
+    textbox->setCallback([&]()
+    {
         text.setString(textbox->getText());
         text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
     });
@@ -87,7 +90,8 @@ int main()
     // Slider for rotation
     gui::Slider* sliderRotation = new gui::Slider();
     sliderRotation->setStep(1);
-    sliderRotation->setCallback([&]() {
+    sliderRotation->setCallback([&]()
+    {
         text.setRotation(sliderRotation->getValue() * 360 / 100.f);
         pbar0->setValue(sliderRotation->getValue());
     });
@@ -95,7 +99,8 @@ int main()
 
     // Slider for scale
     gui::Slider* sliderScale = new gui::Slider();
-    sliderScale->setCallback([&]() {
+    sliderScale->setCallback([&]()
+    {
         float scale = 1 + sliderScale->getValue() * 2 / 100.f;
         text.setScale(scale, scale);
     });
@@ -108,14 +113,16 @@ int main()
     opt->addItem("Green", sf::Color::Green);
     opt->addItem("Yellow", sf::Color::Yellow);
     opt->addItem("White", sf::Color::White);
-    opt->setCallback([&]() {
+    opt->setCallback([&]()
+    {
         text.setFillColor(opt->getSelectedValue());
     });
     form->addRow("Color", opt);
 
     // Checbkox
     gui::CheckBox* checkboxBold = new gui::CheckBox();
-    checkboxBold->setCallback([&]() {
+    checkboxBold->setCallback([&]()
+    {
         int style = text.getStyle();
         if (checkboxBold->isChecked())
             style |= sf::Text::Bold;
@@ -126,7 +133,8 @@ int main()
     form->addRow("Bold text", checkboxBold);
 
     gui::CheckBox* checkboxUnderlined = new gui::CheckBox();
-    checkboxUnderlined->setCallback([&]() {
+    checkboxUnderlined->setCallback([&]()
+    {
         int style = text.getStyle();
         if (checkboxUnderlined->isChecked())
             style |= sf::Text::Underlined;
@@ -142,7 +150,7 @@ int main()
 
     // Custom button
     sf::Texture imgbutton;
-    imgbutton.loadFromFile("demo/themed-button.png");
+    imgbutton.loadFromFile("resource/themed-button.png");
 
     gui::SpriteButton* customButton = new gui::SpriteButton(imgbutton, "Play");
     customButton->setTextSize(20);
@@ -154,7 +162,8 @@ int main()
     gui::OptionsBox<Theme>* themeBox = new gui::OptionsBox<Theme>();
     themeBox->addItem("Windows 98", win98Theme);
     themeBox->addItem("Default", defaultTheme);
-    themeBox->setCallback([&]() {
+    themeBox->setCallback([&]()
+    {
         const Theme& theme = themeBox->getSelectedValue();
         gui::Theme::loadTexture(theme.texturePath);
         gui::Theme::windowBgColor = theme.backgroundColor;
@@ -166,7 +175,8 @@ int main()
     gui::TextBox* textbox3 = new gui::TextBox(100);
     textbox3->setText("Button name");
     hbox2->add(textbox3);
-    hbox2->addButton("Create button", [&]() {
+    hbox2->addButton("Create button", [&]()
+    {
         vbox->add(new gui::Button(textbox3->getText()));
     });
 
@@ -177,17 +187,19 @@ int main()
     hbox3->add(pbar);
 
     gui::Slider* vslider = new gui::Slider(100, gui::Slider::Vertical);
-    vslider->setCallback([&]() {
+    vslider->setCallback([&]()
+    {
         pbar->setValue(vslider->getValue());
     });
     hbox->add(vslider);
 
-    menu.addButton("Quit", [&]() {
+    menu.addButton("Quit", [&]()
+    {
         app.close();
     });
 
     sf::Texture texture;
-    texture.loadFromFile("demo/sfml.png");
+    texture.loadFromFile("resource/sfml.png");
 
     sf::Sprite sprite(texture);
     sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
