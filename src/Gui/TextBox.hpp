@@ -52,6 +52,11 @@ public:
     const sf::String& getSelectedText() const;
 
     /**
+     * Cancel the text selection range, if any
+     */
+    void clearSelectedText();
+
+    /**
      * Set placeholder text
      */
     void setPlaceholder(const sf::String& placeholder);
