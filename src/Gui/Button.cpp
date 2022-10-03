@@ -22,7 +22,7 @@ void Button::setString(const sf::String& string)
     int fittingWidth = m_box.item().getLocalBounds().width + Theme::PADDING * 2 + Theme::borderSize * 2;
     int width = std::max(fittingWidth, Theme::minWidgetWidth);
     m_box.setSize(width, Theme::getBoxHeight());
-    m_box.centerText(m_box.item());
+    m_box.centerTextHorizontally(m_box.item());
     setSize(m_box.getSize());
 }
 

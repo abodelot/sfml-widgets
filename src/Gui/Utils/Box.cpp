@@ -146,12 +146,21 @@ void Box::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 
-void Box::centerText(sf::Text& text)
+void Box::centerTextHorizontally(sf::Text& text)
 {
     sf::Vector2f size = getSize();
-    sf::FloatRect item_size = text.getLocalBounds();
-    int x = getPosition().x + (size.x - item_size.width) / 2;
+    sf::FloatRect textSize = text.getLocalBounds();
+    int x = getPosition().x + (size.x - textSize.width) / 2;
     text.setPosition(x, Theme::borderSize + Theme::PADDING);
+}
+
+
+void Box::centerTextVertically(sf::Text& text)
+{
+    sf::Vector2f size = getSize();
+    sf::FloatRect textSize = text.getLocalBounds();
+    int y = getPosition().y + (size.y - textSize.width) / 2;
+    text.setPosition(Theme::getBoxHeight() - Theme::PADDING, y);
 }
 
 }

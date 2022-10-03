@@ -4,8 +4,8 @@
 namespace gui
 {
 
-Slider::Slider(float length, Type type):
-    m_type(type),
+Slider::Slider(float length, Orientation orientation):
+    m_orientation(orientation),
     m_step(10),
     m_value(0),
     m_box(Box::Input)
@@ -15,7 +15,7 @@ Slider::Slider(float length, Type type):
     int boxHeight = Theme::borderSize * 3;
     int boxOffset = (handleHeight - boxHeight) / 2;
 
-    if (type == Horizontal)
+    if (orientation == Horizontal)
     {
         m_box.setSize(length, boxHeight);
         m_box.setPosition(0, boxOffset);
@@ -99,7 +99,7 @@ void Slider::setValue(int value)
 
 void Slider::updateHandlePosition()
 {
-    if (m_type == Horizontal)
+    if (m_orientation == Horizontal)
     {
         int max = getSize().x - m_handle.getSize().x - Theme::borderSize * 2;
         int x = max * m_value / 100 + Theme::borderSize;
@@ -154,7 +154,7 @@ void Slider::onKeyPressed(const sf::Event::KeyEvent& key)
 
 void Slider::onMousePressed(float x, float y)
 {
-    if (m_type == Horizontal)
+    if (m_orientation == Horizontal)
         setValue(100 * x / getSize().x);
     else
         setValue(100 - (100 * (y) / getSize().y));
@@ -169,7 +169,7 @@ void Slider::onMouseMoved(float x, float y)
     {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            if (m_type == Horizontal)
+            if (m_orientation == Horizontal)
                 setValue(100 * x / getSize().x);
             else
                 setValue(100 - (100 * y / getSize().y));

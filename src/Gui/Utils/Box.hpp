@@ -60,7 +60,9 @@ public:
         );
     }
 
-    void centerText(sf::Text& item);
+    void centerTextHorizontally(sf::Text& item);
+
+    void centerTextVertically(sf::Text& item);
 
 protected:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

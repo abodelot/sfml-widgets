@@ -56,7 +56,7 @@ void OptionsBox<T>::selectItem(size_t item_index)
     {
         m_currentIndex = item_index;
         m_box.item().setString(m_items[item_index].label);
-        m_box.centerText(m_box.item());
+        m_box.centerTextHorizontally(m_box.item());
     }
 }
 

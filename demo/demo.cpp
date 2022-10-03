@@ -41,7 +41,8 @@ int main()
     };
 
     // Create the main window
-    sf::RenderWindow app(sf::VideoMode(640, 480), "SFML Widgets", sf::Style::Close);
+    sf::RenderWindow app(sf::VideoMode(800, 600), "SFML Widgets", sf::Style::Close);
+    app.setFramerateLimit(60);
 
     gui::Menu menu(app);
     menu.setPosition(10, 10);
@@ -65,7 +66,7 @@ int main()
 
     sf::Text text("Hello world!", gui::Theme::getFont());
     text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
-    text.setPosition(320, 360);
+    text.setPosition(480, 240);
 
     // Textbox
     gui::TextBox* textbox = new gui::TextBox();
@@ -82,22 +83,32 @@ int main()
     textbox2->setMaxLength(5);
     form->addRow("Text with limit (5)", textbox2);
 
-    gui::ProgressBar* pbar0 = new gui::ProgressBar();
-
-    // Slider for rotation
+    // Slider + ProgressBar for rotation
     gui::Slider* sliderRotation = new gui::Slider();
+    gui::ProgressBar* pbarRotation1 = new gui::ProgressBar(200.f, gui::Horizontal, gui::LabelNone);
+    gui::ProgressBar* pbarRotation2 = new gui::ProgressBar(200.f, gui::Horizontal, gui::LabelOver);
+    gui::ProgressBar* pbarRotation3 = new gui::ProgressBar(200.f, gui::Horizontal, gui::LabelOutside);
+
     sliderRotation->setStep(1);
     sliderRotation->setCallback([&]() {
         text.setRotation(sliderRotation->getValue() * 360 / 100.f);
-        pbar0->setValue(sliderRotation->getValue());
+        pbarRotation1->setValue(sliderRotation->getValue());
+        pbarRotation2->setValue(sliderRotation->getValue());
+        pbarRotation3->setValue(sliderRotation->getValue());
     });
     form->addRow("Rotation", sliderRotation);
 
-    // Slider for scale
+    // Slider + ProgressBar for scale
     gui::Slider* sliderScale = new gui::Slider();
+    gui::ProgressBar* pbarScale1 = new gui::ProgressBar(100, gui::Vertical, gui::LabelNone);
+    gui::ProgressBar* pbarScale2 = new gui::ProgressBar(100, gui::Vertical, gui::LabelOver);
+    gui::ProgressBar* pbarScale3 = new gui::ProgressBar(100, gui::Vertical, gui::LabelOutside);
     sliderScale->setCallback([&]() {
         float scale = 1 + sliderScale->getValue() * 2 / 100.f;
         text.setScale(scale, scale);
+        pbarScale1->setValue(sliderScale->getValue());
+        pbarScale2->setValue(sliderScale->getValue());
+        pbarScale3->setValue(sliderScale->getValue());
     });
     form->addRow("Scale", sliderScale);
 
@@ -137,7 +148,17 @@ int main()
     form->addRow("Underlined text", checkboxUnderlined);
 
     // Progress bar
-    form->addRow("Progress bar", pbar0);
+    form->addRow("Progress bar (label = None)", pbarRotation1);
+    form->addRow("Progress bar (label = Over)", pbarRotation2);
+    form->addRow("Progress bar (label = Outside)", pbarRotation3);
+
+    // Vertical progress bars
+    gui::Layout* layoutForVerticalProgressBars = new gui::HBoxLayout();
+    layoutForVerticalProgressBars->add(pbarScale1);
+    layoutForVerticalProgressBars->add(pbarScale2);
+    layoutForVerticalProgressBars->add(pbarScale3);
+    form->addRow("Vertical progress bars", layoutForVerticalProgressBars);
+
     form->addRow("Default button", new gui::Button("button"));
 
     // Custom button
@@ -164,7 +185,8 @@ int main()
     // Textbox
     gui::HBoxLayout* hbox2 = vbox->addHBoxLayout();
     gui::TextBox* textbox3 = new gui::TextBox(100);
-    textbox3->setText("Button name");
+    textbox3->setText("My Button");
+    textbox3->setPlaceholder("Button label");
     hbox2->add(textbox3);
     hbox2->addButton("Create button", [&]() {
         vbox->add(new gui::Button(textbox3->getText()));
@@ -176,7 +198,7 @@ int main()
     gui::ProgressBar* pbar = new gui::ProgressBar(40);
     hbox3->add(pbar);
 
-    gui::Slider* vslider = new gui::Slider(100, gui::Slider::Vertical);
+    gui::Slider* vslider = new gui::Slider(100, gui::Vertical);
     vslider->setCallback([&]() {
         pbar->setValue(vslider->getValue());
     });

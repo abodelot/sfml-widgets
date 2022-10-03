@@ -1,6 +1,9 @@
 #ifndef GUI_GUI_HPP
 #define GUI_GUI_HPP
 
+// Enums
+#include "Enums/Enums.hpp"
+
 // Widgets
 #include "Button.hpp"
 #include "CheckBox.hpp"

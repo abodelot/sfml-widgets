@@ -3,6 +3,7 @@
 
 #include "Widget.hpp"
 #include "Utils/Box.hpp"
+#include "Enums/Enums.hpp"
 
 namespace gui
 {
@@ -15,13 +16,7 @@ namespace gui
 class Slider: public Widget
 {
 public:
-    enum Type
-    {
-        Horizontal,
-        Vertical
-    };
-
-    Slider(float length = 200, Type type = Horizontal);
+    Slider(float length = 200, Orientation orientation = Horizontal);
 
     int getStep() const;
 
@@ -48,7 +43,7 @@ private:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-    Type m_type;
+    Orientation m_orientation;
     int m_step;
     int m_value;
     Box m_box;
