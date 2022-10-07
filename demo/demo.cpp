@@ -1,4 +1,3 @@
-#include "Gui/Menu.hpp"
 #include "Gui/Theme.hpp"
 #include "Gui/Gui.hpp"
 #include <SFML/Graphics.hpp>

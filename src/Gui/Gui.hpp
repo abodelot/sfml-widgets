@@ -1,6 +1,9 @@
 #ifndef GUI_GUI_HPP
 #define GUI_GUI_HPP
 
+#include "Menu.hpp"
+#include "Theme.hpp"
+
 // Enums
 #include "Enums/Enums.hpp"
 
