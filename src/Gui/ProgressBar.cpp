@@ -55,7 +55,7 @@ ProgressBar::ProgressBar(float length, Orientation orientation, LabelPlacement l
         else
         {
             // Place label below the bar
-            setSize(m_box.getSize().y, length + Theme::PADDING + labelHeight);
+            setSize(m_box.getSize().x, length + Theme::PADDING + labelHeight);
         }
     }
     else
