@@ -170,7 +170,7 @@ int main()
 
     // Custom button
     sf::Texture imgbutton;
-    imgbutton.loadFromFile(chk::getResourcePath("resources/themed-button.png"));
+    imgbutton.loadFromFile(chk::getResourcePath("themed-button.png"));
 
     gui::SpriteButton* customButton = new gui::SpriteButton(imgbutton, "Play");
     customButton->setTextSize(20);
@@ -213,7 +213,7 @@ int main()
     menu.addButton("Quit", [&]() { app.close(); });
 
     sf::Texture texture;
-    texture.loadFromFile(chk::getResourcePath("resources/sfml.png"));
+    texture.loadFromFile(chk::getResourcePath("sfml.png"));
 
     sf::Sprite sprite(texture);
     sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);

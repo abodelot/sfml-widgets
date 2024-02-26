@@ -12,11 +12,45 @@ A simple GUI module for SFML.
 - Author: Alexandre Bodelot <alexandre.bodelot@gmail.com>
 - License: [MIT License](http://opensource.org/licenses/MIT) (See LICENSE file)
 
-Run `make` to build the library (`lib/libsfml-widgets.a`) and the demo program.
+## Requirements:
+- Download SFML 2.6.x latest stable
+- Download latest [CMake Installer](https://cmake.org/download/)
 
-You can then run the demo: `./sfml-widgets-demo`
+### Windows:
+- Visual Studio 2019 or later (select complete "**Desktop C++ Dev**" workload)
+- Windows SDK (download using Visual Studio).
+  
+### MacOS
+- XCode latest with MacOS SDK.
+- Extra Apple Developer Tools. After Xcode installs, simply run this in terminal:
+  ```bash
+  sudo xcode-select --install
+  ```
+- After CMake GUI installs on your Mac, make sure to add its CLI to PATH:
+  ```bash
+   sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install
+  ```
 
-## Setup
+### Linux Desktop
+- Use your package manager (`apt-get` or `yum`) to download dependencies listed [in official docs](https://www.sfml-dev.org/tutorials/2.6/compile-with-cmake.php#installing-dependencies)
+
+## Building locally
+
+- On Windows, simply open this project in Visual Studio 2019 or later, choose "Release" or "Debug" from top toolbar. Then click "Build".
+- If using CMake GUI (all platforms),  set "Source Folder" to this project root. Then set "Build Folder" to new _relative_ folder `/build` or `/out`. See image below. Then click "Configure", choose **Unix Makefiles**, then click Generate. Finally, open build folder, then run `make all` in Terminal
+ ![cmake_screenshot](doc/cmake_gui.png)
+ 
+- Alternatively, using the CMake CLI on your terminal:
+
+```bash
+mkdir build
+cd build
+cmake . . -G "Unix MakeFiles"
+cmake --build . --config Release --target all -j 10
+```
+
+
+## How to use the library
 
 1. Load resources (font, spritesheet) in static class `gui::Theme`
 2. Use `gui::Menu` to create a new sfml-widgets menu. It needs to be connected to your SFML render window, which is given to the constructor.
@@ -32,12 +66,15 @@ Minimal example:
 int main()
 {
     sf::RenderWindow app(sf::VideoMode(800, 600), "SFML Widgets", sf::Style::Close);
+     
+    //set FPS limit
+    //app.setFramerateLimit(60);
 
     // Declare menu
     gui::Menu menu(app);
 
-    gui::Theme::loadFont("demo/tahoma.ttf");
-    gui::Theme::loadTexture("demo/texture-default.png");
+    gui::Theme::loadFont("resources/tahoma.ttf");
+    gui::Theme::loadTexture("resources/texture-default.png");
 
     // Create some button widget
     gui::Button* button = new gui::Button("My button");
