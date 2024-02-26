@@ -41,7 +41,7 @@ int main()
     gui::Menu menu(app);
     menu.setPosition(10, 10);
 
-    gui::Theme::loadFont(chk::getResourcePath("resources/tahoma.ttf"));
+    gui::Theme::loadFont(chk::getResourcePath("tahoma.ttf"));
     gui::Theme::loadTexture(defaultTheme.texturePath);
     gui::Theme::textSize = 11;
     gui::Theme::click.textColor = hex2color("#191B18");

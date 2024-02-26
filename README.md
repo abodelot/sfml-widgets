@@ -117,6 +117,8 @@ int main()
 
 `demo/demo.cpp` conains a more complex example, featuring all widgets.
 
+![demo_screenshot](doc/demo_screenshot.png)
+
 ## Widgets
 
 ### `gui::Button`

@@ -9,11 +9,14 @@ set(DEMO_EXE "demo_widgets")
 # ##############################################################################
 # IMPORTANT HINT: Tell CMake where you installed SFML libs & headers (root folder)
 ###############################################################################
-# set(SFML_HOME "C:/SFML/SFML-2.6.1")                  ## (<---WINDOWS) 
-# set(SFML_HOME "/Library/Frameworks/SFML.framework/") ## (<---MACOS) set(SFML_DIR
-# ${SFML_HOME}/lib/cmake/SFML) s
+##### (WINDOWS) 
+# set(SFML_HOME "C:/SFML/SFML-2.6.1") 
+##### (MACOS)                 
+# set(SFML_HOME "/Library/Frameworks/SFML.framework/") 
 
-set(ENABLE_DEMO TRUE)
+# set(SFML_DIR ${SFML_HOME}/lib/cmake/SFML) 
+
+set(ENABLE_DEMO TRUE) 
 
 # FIND SFML libs
 find_package(SFML 2.6 REQUIRED COMPONENTS "graphics" "window" "system")
@@ -28,11 +31,18 @@ if(WIN32)
 endif()
 
 # ##############################################################################
-# Configure build for SFGraphing library
+# Configure build for SFML Widgets library
 file(GLOB_RECURSE SFML_WIDGETS_SRC src/Gui/*.cpp src/Gui/**/*.cpp)
 add_library(sfml-widgets ${SFML_WIDGETS_SRC})
 target_link_libraries(sfml-widgets PUBLIC sfml-graphics sfml-window sfml-system)
-target_include_directories(sfml-widgets PUBLIC ${CMAKE_SOURCE_DIR}/src/)
+target_include_directories(sfml-widgets PUBLIC ${SFML_HOME}/include ${CMAKE_SOURCE_DIR}/src/)
+
+# show warnings (depending on C++ compiler)
+if(MSVC)
+  target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC /W4)
+else()
+  target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -Wall -Wextra)
+endif()
 
 # ##############################################################################
 # Configure build for Sample program
@@ -41,20 +51,17 @@ if(ENABLE_DEMO)
 
   if(WIN32)
     add_executable(${DEMO_EXE} WIN32 ${DEMO_SRC})
-    target_link_libraries(
-      ${DEMO_EXE} PRIVATE sfml-widgets sfml-main OpenGL::GL sfml-graphics
+    target_link_libraries(${DEMO_EXE} PRIVATE sfml-widgets sfml-main OpenGL::GL sfml-graphics
                           sfml-window sfml-system)
 
   elseif(APPLE)
     include(${CMAKE_SOURCE_DIR}/apple_cmake/MacBundle.cmake)
     find_library(FOUNDATION_FRAMEWORK Foundation)
-    target_link_libraries(
-      ${DEMO_EXE} PRIVATE sfml-widgets OpenGL::GL sfml-graphics sfml-window
+    target_link_libraries(${DEMO_EXE} PRIVATE sfml-widgets OpenGL::GL sfml-graphics sfml-window
                           sfml-system ${FOUNDATION_FRAMEWORK})
   else()
     add_executable(${DEMO_EXE} ${DEMO_SRC})
-    target_link_libraries(
-      ${DEMO_EXE} PRIVATE sfml-widgets OpenGL::GL sfml-graphics sfml-window
+    target_link_libraries(${DEMO_EXE} PRIVATE sfml-widgets OpenGL::GL sfml-graphics sfml-window
                           sfml-system)
   endif(WIN32)
 
@@ -73,9 +80,3 @@ endif(ENABLE_DEMO)
 # include SFML headers
 include_directories(${SFML_HOME}/include)
 
-# show warnings (depending on C++ compiler)
-if(MSVC)
-  target_compile_options(${DEMO_EXE} PUBLIC /W4)
-else()
-  target_compile_options(${DEMO_EXE} PUBLIC -Wall -Wextra)
-endif()
