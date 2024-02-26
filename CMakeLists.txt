@@ -4,13 +4,15 @@ project(sfml-widgets VERSION 1.1.0)
 # ##############################################################################
 # Option Setting
 option(ENABLE_DEMO "build demo program.(Default:ON)" ON)
+set(DEMO_EXE "demo_widgets")
 
 # ##############################################################################
-# IMPORTANT HINT: Tell CMake where you installed SFML libs & headers
+# IMPORTANT HINT: Tell CMake where you installed SFML libs & headers (root folder)
+###############################################################################
+# set(SFML_HOME "C:/SFML/SFML-2.6.1")                  ## (<---WINDOWS) 
+# set(SFML_HOME "/Library/Frameworks/SFML.framework/") ## (<---MACOS) set(SFML_DIR
+# ${SFML_HOME}/lib/cmake/SFML) s
 
-# set(SFML_HOME "C:/SFML/SFML-2.6.1") ## (<---WINDOWS)
-# set(SFML_HOME "/Library/Frameworks/SFML.framework/") ## (<---MACOS)
-# set(SFML_DIR ${SFML_HOME}/lib/cmake/SFML)
 set(ENABLE_DEMO TRUE)
 
 # FIND SFML libs
@@ -32,48 +34,48 @@ add_library(sfml-widgets ${SFML_WIDGETS_SRC})
 target_link_libraries(sfml-widgets PUBLIC sfml-graphics sfml-window sfml-system)
 target_include_directories(sfml-widgets PUBLIC ${CMAKE_SOURCE_DIR}/src/)
 
-# show warnings (depending on C++ compiler)
-if(MSVC)
-  target_compile_options(sfml-widgets PUBLIC /W4)
-else()
-  target_compile_options(sfml-widgets PUBLIC -Wall -Wextra)
-endif()
-
 # ##############################################################################
 # Configure build for Sample program
 if(ENABLE_DEMO)
-  file(GLOB DEMO_SRC demo/*.cpp)
-  add_executable(demo_program ${DEMO_SRC})
- 
+  file(GLOB DEMO_SRC demo/*.cpp demo/*.mm)
+
   if(WIN32)
-  add_executable(demo_program WIN32 ${DEMO_SRC})
-  target_link_libraries(demo_program PRIVATE sfml-widgets sfml-main OpenGL::GL sfml-graphics sfml-window sfml-system)
- 
+    add_executable(${DEMO_EXE} WIN32 ${DEMO_SRC})
+    target_link_libraries(
+      ${DEMO_EXE} PRIVATE sfml-widgets sfml-main OpenGL::GL sfml-graphics
+                          sfml-window sfml-system)
+
   elseif(APPLE)
-  include(${CMAKE_SOURCE_DIR}/apple_cmake/MacBundle.cmake)
-  find_library(FOUNDATION_FRAMEWORK Foundation)
-  target_link_libraries(demo_program PRIVATE sfml-widgets OpenGL::GL sfml-graphics sfml-window sfml-system
-                         ${FOUNDATION_FRAMEWORK})
+    include(${CMAKE_SOURCE_DIR}/apple_cmake/MacBundle.cmake)
+    find_library(FOUNDATION_FRAMEWORK Foundation)
+    target_link_libraries(
+      ${DEMO_EXE} PRIVATE sfml-widgets OpenGL::GL sfml-graphics sfml-window
+                          sfml-system ${FOUNDATION_FRAMEWORK})
   else()
-  add_executable(demo_program ${SOURCES}) 
-  target_link_libraries(demo_program PRIVATE sfml-widgets OpenGL::GL sfml-graphics sfml-window sfml-system)
-  endif()
+    add_executable(${DEMO_EXE} ${DEMO_SRC})
+    target_link_libraries(
+      ${DEMO_EXE} PRIVATE sfml-widgets OpenGL::GL sfml-graphics sfml-window
+                          sfml-system)
+  endif(WIN32)
 
-  #include SFML headers
-  include_directories(${SFML_HOME}/include)
-
-  # show warnings (depending on C++ compiler)
-  if(MSVC)
-    target_compile_options(demo_program PUBLIC /W4)
-  else()
-    target_compile_options(demo_program PUBLIC -Wall -Wextra)
-  endif()
-
-  
   # COPY resources folder to destination (Windows & Linux)
   if(NOT APPLE)
-   add_custom_command(
-   TARGET demo_program POST_BUILD
-   COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/demo/resources $<TARGET_FILE_DIR:demo_program>/resources
-)
+    add_custom_command(
+      TARGET ${DEMO_EXE}
+      POST_BUILD
+      COMMAND
+        ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/demo/resources
+        $<TARGET_FILE_DIR:${DEMO_EXE}>/resources)
+  endif()
+endif(ENABLE_DEMO)
+############################ END OF DEMO PROGRAM ###############################
+
+# include SFML headers
+include_directories(${SFML_HOME}/include)
+
+# show warnings (depending on C++ compiler)
+if(MSVC)
+  target_compile_options(${DEMO_EXE} PUBLIC /W4)
+else()
+  target_compile_options(${DEMO_EXE} PUBLIC -Wall -Wextra)
 endif()
