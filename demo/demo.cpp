@@ -31,12 +31,12 @@ int main()
 {
     Theme defaultTheme = {
         hex2color("#dddbde"),
-        "demo/texture-default.png"
+        "resources/texture-default.png"
     };
 
     Theme win98Theme = {
         hex2color("#d4d0c8"),
-        "demo/texture-win98.png"
+        "resources/texture-win98.png"
     };
 
     // Create the main window
@@ -46,7 +46,7 @@ int main()
     gui::Menu menu(app);
     menu.setPosition(10, 10);
 
-    gui::Theme::loadFont("demo/tahoma.ttf");
+    gui::Theme::loadFont("resources/tahoma.ttf");
     gui::Theme::loadTexture(defaultTheme.texturePath);
     gui::Theme::textSize = 11;
     gui::Theme::click.textColor      = hex2color("#191B18");
@@ -162,7 +162,7 @@ int main()
 
     // Custom button
     sf::Texture imgbutton;
-    imgbutton.loadFromFile("demo/themed-button.png");
+    imgbutton.loadFromFile("resources/themed-button.png");
 
     gui::SpriteButton* customButton = new gui::SpriteButton(imgbutton, "Play");
     customButton->setTextSize(20);
@@ -208,7 +208,7 @@ int main()
     });
 
     sf::Texture texture;
-    texture.loadFromFile("demo/sfml.png");
+    texture.loadFromFile("resources/sfml.png");
 
     sf::Sprite sprite(texture);
     sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
