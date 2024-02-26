@@ -13,16 +13,18 @@ A simple GUI module for SFML.
 - License: [MIT License](http://opensource.org/licenses/MIT) (See LICENSE file)
 
 ## Requirements:
-- Download SFML 2.6.x latest stable
+- [Download SFML 2.6.x](https://www.sfml-dev.org/download.php) for your platform
 - Download latest [CMake Installer](https://cmake.org/download/)
 
 ### Windows:
-- Visual Studio 2019 or later (select complete "**Desktop C++ Dev**" workload)
-- Windows SDK (download using Visual Studio).
+- Visual Studio 2022 or later (select complete "**Desktop C++ Development**" workload)
+- Windows SDK.
+- CMake for VS2022 (download using Visual Studio installer).
   
 ### MacOS
 - XCode latest with MacOS SDK.
-- Extra Apple Developer Tools. After Xcode installs, simply run this in terminal:
+- Follow [official guide](https://www.sfml-dev.org/tutorials/2.6/start-osx.php) on installing SFML on MacOS
+- Extra Apple Developer Tools. After Xcode installs, run this in Terminal:
   ```bash
   sudo xcode-select --install
   ```
@@ -32,21 +34,22 @@ A simple GUI module for SFML.
   ```
 
 ### Linux Desktop
-- Use your package manager (`apt-get` or `yum`) to download dependencies listed [in official docs](https://www.sfml-dev.org/tutorials/2.6/compile-with-cmake.php#installing-dependencies)
+- Use your package manager (`apt-get` or `yum`) to download SFML dev dependencies listed [in official docs](https://www.sfml-dev.org/tutorials/2.6/compile-with-cmake.php#installing-dependencies)
 
 ## Building locally
 
-- On Windows, simply open this project in Visual Studio 2019 or later, choose "Release" or "Debug" from top toolbar. Then click "Build".
-- If using CMake GUI (all platforms),  set "Source Folder" to this project root. Then set "Build Folder" to new _relative_ folder `/build` or `/out`. See image below. Then click "Configure", choose **Unix Makefiles**, then click Generate. Finally, open build folder, then run `make all` in Terminal
+- On Windows, open this project in Visual Studio 2022 or later, choose "Release" or "Debug" from top toolbar. Then click "Build" > "Build All".
+- If using CMake GUI (all platforms), set "Source Folder" to this project root. Then set "Build Folder" to new _relative_ folder `/build` or `/out`. See image below. Then click "Configure", choose **Unix Makefiles**, then click Generate. Finally, open build folder, then run `make all` in Terminal.
+
  ![cmake_screenshot](doc/cmake_gui.png)
  
-- Alternatively, using the CMake CLI on your terminal:
+- Alternatively, you can use the CMake CLI on your Terminal:
 
 ```bash
 mkdir build
 cd build
-cmake . . -G "Unix MakeFiles"
-cmake --build . --config Release --target all -j 10
+cmake . .
+cmake --build . --config Release --target all
 ```
 
 
@@ -73,8 +76,8 @@ int main()
     // Declare menu
     gui::Menu menu(app);
 
-    gui::Theme::loadFont("resources/tahoma.ttf");
-    gui::Theme::loadTexture("resources/texture-default.png");
+    gui::Theme::loadFont("resources/tahoma.ttf"); //TODO handle error
+    gui::Theme::loadTexture("resources/texture-default.png"); //TODO handle error
 
     // Create some button widget
     gui::Button* button = new gui::Button("My button");
@@ -111,7 +114,7 @@ int main()
         app.display();
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 ```
 

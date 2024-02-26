@@ -7,7 +7,7 @@ option(ENABLE_DEMO "build demo program.(Default:ON)" ON)
 set(DEMO_EXE "demo_widgets")
 
 # ##############################################################################
-# IMPORTANT HINT: Tell CMake where you installed SFML libs & headers (root folder)
+# IMPORTANT HINT: Tell CMake absolute directory you installed SFML libs 
 ###############################################################################
 ##### (WINDOWS) 
 # set(SFML_HOME "C:/SFML/SFML-2.6.1") 
@@ -18,7 +18,7 @@ set(DEMO_EXE "demo_widgets")
 
 set(ENABLE_DEMO TRUE) 
 
-# FIND SFML libs
+# FIND SFML precompiled libs
 find_package(SFML 2.6 REQUIRED COMPONENTS "graphics" "window" "system")
 find_package(OpenGL REQUIRED)
 
@@ -35,7 +35,7 @@ endif()
 file(GLOB_RECURSE SFML_WIDGETS_SRC src/Gui/*.cpp src/Gui/**/*.cpp)
 add_library(sfml-widgets ${SFML_WIDGETS_SRC})
 target_link_libraries(sfml-widgets PUBLIC sfml-graphics sfml-window sfml-system)
-target_include_directories(sfml-widgets PUBLIC ${SFML_HOME}/include ${CMAKE_SOURCE_DIR}/src/)
+target_include_directories(sfml-widgets PUBLIC ${CMAKE_SOURCE_DIR}/src/)
 
 # show warnings (depending on C++ compiler)
 if(MSVC)
@@ -46,6 +46,8 @@ endif()
 
 # ##############################################################################
 # Configure build for Sample program
+############################ START OF DEMO ###############################
+
 if(ENABLE_DEMO)
   file(GLOB DEMO_SRC demo/*.cpp demo/*.mm)
 
@@ -65,10 +67,14 @@ if(ENABLE_DEMO)
                           sfml-system)
   endif(WIN32)
 
-  # COPY resources folder to destination (Windows & Linux)
+ 
+  # INCLUDE SFML Headers
+  # include_directories(${SFML_HOME}/include)
+
+  # COPY RESOURCES TO BUILD FOLDER (Windows & Linux)
+  #####################################################
   if(NOT APPLE)
-    add_custom_command(
-      TARGET ${DEMO_EXE}
+    add_custom_command(TARGET ${DEMO_EXE}
       POST_BUILD
       COMMAND
         ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/demo/resources
@@ -77,6 +83,4 @@ if(ENABLE_DEMO)
 endif(ENABLE_DEMO)
 ############################ END OF DEMO PROGRAM ###############################
 
-# include SFML headers
-include_directories(${SFML_HOME}/include)
 

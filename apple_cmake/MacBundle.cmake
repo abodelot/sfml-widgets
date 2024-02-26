@@ -1,4 +1,4 @@
-# icon
+# app icon
 set(MACOSX_BUNDLE_ICON_FILE "SfmlWidgets.icns")
 set(application_icon "${CMAKE_SOURCE_DIR}/demo/resources/${MACOSX_BUNDLE_ICON_FILE}")
 set_source_files_properties(${application_icon}
