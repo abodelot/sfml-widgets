@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 project(sfml-widgets VERSION 1.1.0)
 
 # ##############################################################################
@@ -14,11 +14,10 @@ set(DEMO_EXE "demo_widgets")
 ##### (MACOS)                 
 # set(SFML_HOME "/Library/Frameworks/SFML.framework/") 
 
-# set(SFML_DIR ${SFML_HOME}/lib/cmake/SFML) 
-
 set(ENABLE_DEMO TRUE) 
 
-# FIND SFML precompiled libs
+# FIND SFML precompiled libs & headers
+# set(SFML_DIR ${SFML_HOME}/lib/cmake/SFML) 
 find_package(SFML 2.6 REQUIRED COMPONENTS "graphics" "window" "system")
 find_package(OpenGL REQUIRED)
 
@@ -32,7 +31,7 @@ endif()
 
 # ##############################################################################
 # Configure build for SFML Widgets library
-file(GLOB_RECURSE SFML_WIDGETS_SRC src/Gui/*.cpp src/Gui/**/*.cpp)
+file(GLOB_RECURSE SFML_WIDGETS_SRC src/Gui/*.cpp)
 add_library(sfml-widgets ${SFML_WIDGETS_SRC})
 target_link_libraries(sfml-widgets PUBLIC sfml-graphics sfml-window sfml-system)
 target_include_directories(sfml-widgets PUBLIC ${CMAKE_SOURCE_DIR}/src/)
@@ -52,7 +51,7 @@ if(ENABLE_DEMO)
   file(GLOB DEMO_SRC demo/*.cpp demo/*.mm)
 
   if(WIN32)
-    add_executable(${DEMO_EXE} WIN32 ${DEMO_SRC})
+    add_executable(${DEMO_EXE} WIN32 ${DEMO_SRC} ${CMAKE_SOURCE_DIR}/demo/resources/win-icon.rc)
     target_link_libraries(${DEMO_EXE} PRIVATE sfml-widgets sfml-main OpenGL::GL sfml-graphics
                           sfml-window sfml-system)
 
@@ -75,8 +74,7 @@ if(ENABLE_DEMO)
   #####################################################
   if(NOT APPLE)
     add_custom_command(TARGET ${DEMO_EXE}
-      POST_BUILD
-      COMMAND
+      POST_BUILD COMMAND
         ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/demo/resources
         $<TARGET_FILE_DIR:${DEMO_EXE}>/resources)
   endif()

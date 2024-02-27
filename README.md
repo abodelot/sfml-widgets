@@ -14,11 +14,10 @@ A simple GUI module for SFML.
 
 ## Requirements:
 - [Download SFML 2.6.x](https://www.sfml-dev.org/download.php) for your platform
-- Download latest [CMake Installer](https://cmake.org/download/)
+- Latest [CMake Installer](https://cmake.org/download/) - version 3.20 or higher
 
 ### Windows:
 - Visual Studio 2022 or later (select complete "**Desktop C++ Development**" workload)
-- Windows SDK.
 - CMake for VS2022 (download using Visual Studio installer).
   
 ### MacOS
@@ -70,14 +69,14 @@ int main()
 {
     sf::RenderWindow app(sf::VideoMode(800, 600), "SFML Widgets", sf::Style::Close);
      
-    //set FPS limit
+    //Set FPS limit
     //app.setFramerateLimit(60);
 
     // Declare menu
     gui::Menu menu(app);
 
-    gui::Theme::loadFont("resources/tahoma.ttf"); //TODO handle error
-    gui::Theme::loadTexture("resources/texture-default.png"); //TODO handle error
+    gui::Theme::loadFont("resources/tahoma.ttf");
+    gui::Theme::loadTexture("resources/texture-default.png"); 
 
     // Create some button widget
     gui::Button* button = new gui::Button("My button");
