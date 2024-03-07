@@ -7,7 +7,7 @@ option(ENABLE_DEMO "build demo program.(Default:ON)" ON)
 set(DEMO_EXE "demo_widgets")
 
 # ##############################################################################
-# IMPORTANT HINT: Tell CMake absolute directory you installed SFML libs 
+# HINT: Tell CMake which directory you installed SFML libs 
 ###############################################################################
 ##### (WINDOWS) 
 # set(SFML_HOME "C:/SFML/SFML-2.6.1") 
@@ -17,8 +17,9 @@ set(DEMO_EXE "demo_widgets")
 set(ENABLE_DEMO TRUE) 
 
 # FIND SFML precompiled libs & headers
+##############################################
 # set(SFML_DIR ${SFML_HOME}/lib/cmake/SFML) 
-find_package(SFML 2.6 REQUIRED COMPONENTS "graphics" "window" "system")
+find_package(SFML 2.5 REQUIRED COMPONENTS "graphics" "window" "system")
 find_package(OpenGL REQUIRED)
 
 # ##############################################################################
@@ -68,6 +69,7 @@ if(ENABLE_DEMO)
 
  
   # INCLUDE SFML Headers
+  ####################################################
   # include_directories(${SFML_HOME}/include)
 
   # COPY RESOURCES TO BUILD FOLDER (Windows & Linux)
