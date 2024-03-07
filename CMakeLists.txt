@@ -25,7 +25,7 @@ find_package(OpenGL REQUIRED)
 # Configure general build settings
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-if(WIN32)
+if(NOT APPLE)
   set(SFML_STATIC_LIBRARIES TRUE)
 endif()
 
