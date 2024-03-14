@@ -2,11 +2,52 @@
 sfml-widgets-demo
 
 # Lib
+*.lai
+*.la
 *.a
+*.lib
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dl
 
 # Compilation files
+*.slo
+*.lo
 *.o
+*.obj
+
+# Executables
+*.exe
+*.out
+*.app
+*.zip
+*.rar
+/cmake-build-*/
+**/.DS_Store
 
 # Code::Blocks
 sfml-widgets.layout
 sfml-widgets.depend
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Clion
+*.iml
+.idea/

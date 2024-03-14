@@ -1,6 +1,7 @@
 #include "Gui/Theme.hpp"
 #include "Gui/Gui.hpp"
 #include <SFML/Graphics.hpp>
+#include "ResourcePath.hpp"
 
 
 sf::Color hex2color(const std::string& hexcolor)
@@ -29,15 +30,9 @@ struct Theme
 
 int main()
 {
-    Theme defaultTheme = {
-        hex2color("#dddbde"),
-        "demo/texture-default.png"
-    };
+    Theme defaultTheme = {hex2color("#dddbde"), chk::getResourcePath("texture-default.png")};
 
-    Theme win98Theme = {
-        hex2color("#d4d0c8"),
-        "demo/texture-win98.png"
-    };
+    Theme win98Theme = {hex2color("#d4d0c8"), chk::getResourcePath("texture-win98.png")};
 
     // Create the main window
     sf::RenderWindow app(sf::VideoMode(800, 600), "SFML Widgets", sf::Style::Close);
@@ -46,10 +41,10 @@ int main()
     gui::Menu menu(app);
     menu.setPosition(10, 10);
 
-    gui::Theme::loadFont("demo/tahoma.ttf");
+    gui::Theme::loadFont(chk::getResourcePath("tahoma.ttf"));
     gui::Theme::loadTexture(defaultTheme.texturePath);
     gui::Theme::textSize = 11;
-    gui::Theme::click.textColor      = hex2color("#191B18");
+    gui::Theme::click.textColor = hex2color("#191B18");
     gui::Theme::click.textColorHover = hex2color("#191B18");
     gui::Theme::click.textColorFocus = hex2color("#000");
     gui::Theme::input.textColor = hex2color("#000");
@@ -70,10 +65,13 @@ int main()
     // Textbox
     gui::TextBox* textbox = new gui::TextBox();
     textbox->setText("Hello world!");
-    textbox->setCallback([&]() {
-        text.setString(textbox->getText());
-        text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
-    });
+    textbox->setCallback(
+        [&]()
+        {
+            text.setString(textbox->getText());
+            text.setOrigin(text.getLocalBounds().width / 2, text.getLocalBounds().height / 2);
+        }
+    );
     textbox->setPlaceholder("Type something!");
     form->addRow("Text", textbox);
 
@@ -89,12 +87,15 @@ int main()
     gui::ProgressBar* pbarRotation3 = new gui::ProgressBar(200.f, gui::Horizontal, gui::LabelOutside);
 
     sliderRotation->setStep(1);
-    sliderRotation->setCallback([&]() {
-        text.setRotation(sliderRotation->getValue() * 360 / 100.f);
-        pbarRotation1->setValue(sliderRotation->getValue());
-        pbarRotation2->setValue(sliderRotation->getValue());
-        pbarRotation3->setValue(sliderRotation->getValue());
-    });
+    sliderRotation->setCallback(
+        [&]()
+        {
+            text.setRotation(sliderRotation->getValue() * 360 / 100.f);
+            pbarRotation1->setValue(sliderRotation->getValue());
+            pbarRotation2->setValue(sliderRotation->getValue());
+            pbarRotation3->setValue(sliderRotation->getValue());
+        }
+    );
     form->addRow("Rotation", sliderRotation);
 
     // Slider + ProgressBar for scale
@@ -102,13 +103,16 @@ int main()
     gui::ProgressBar* pbarScale1 = new gui::ProgressBar(100, gui::Vertical, gui::LabelNone);
     gui::ProgressBar* pbarScale2 = new gui::ProgressBar(100, gui::Vertical, gui::LabelOver);
     gui::ProgressBar* pbarScale3 = new gui::ProgressBar(100, gui::Vertical, gui::LabelOutside);
-    sliderScale->setCallback([&]() {
-        float scale = 1 + sliderScale->getValue() * 2 / 100.f;
-        text.setScale(scale, scale);
-        pbarScale1->setValue(sliderScale->getValue());
-        pbarScale2->setValue(sliderScale->getValue());
-        pbarScale3->setValue(sliderScale->getValue());
-    });
+    sliderScale->setCallback(
+        [&]()
+        {
+            float scale = 1 + sliderScale->getValue() * 2 / 100.f;
+            text.setScale(scale, scale);
+            pbarScale1->setValue(sliderScale->getValue());
+            pbarScale2->setValue(sliderScale->getValue());
+            pbarScale3->setValue(sliderScale->getValue());
+        }
+    );
     form->addRow("Scale", sliderScale);
 
     // OptionsBox for color
@@ -118,32 +122,36 @@ int main()
     opt->addItem("Green", sf::Color::Green);
     opt->addItem("Yellow", sf::Color::Yellow);
     opt->addItem("White", sf::Color::White);
-    opt->setCallback([&]() {
-        text.setFillColor(opt->getSelectedValue());
-    });
+    opt->setCallback([&]() { text.setFillColor(opt->getSelectedValue()); });
     form->addRow("Color", opt);
 
     // Checbkox
     gui::CheckBox* checkboxBold = new gui::CheckBox();
-    checkboxBold->setCallback([&]() {
-        int style = text.getStyle();
-        if (checkboxBold->isChecked())
-            style |= sf::Text::Bold;
-        else
-            style &= ~sf::Text::Bold;
-        text.setStyle(style);
-    });
+    checkboxBold->setCallback(
+        [&]()
+        {
+            int style = text.getStyle();
+            if (checkboxBold->isChecked())
+                style |= sf::Text::Bold;
+            else
+                style &= ~sf::Text::Bold;
+            text.setStyle(style);
+        }
+    );
     form->addRow("Bold text", checkboxBold);
 
     gui::CheckBox* checkboxUnderlined = new gui::CheckBox();
-    checkboxUnderlined->setCallback([&]() {
-        int style = text.getStyle();
-        if (checkboxUnderlined->isChecked())
-            style |= sf::Text::Underlined;
-        else
-            style &= ~sf::Text::Underlined;
-        text.setStyle(style);
-    });
+    checkboxUnderlined->setCallback(
+        [&]()
+        {
+            int style = text.getStyle();
+            if (checkboxUnderlined->isChecked())
+                style |= sf::Text::Underlined;
+            else
+                style &= ~sf::Text::Underlined;
+            text.setStyle(style);
+        }
+    );
     form->addRow("Underlined text", checkboxUnderlined);
 
     // Progress bar
@@ -162,7 +170,7 @@ int main()
 
     // Custom button
     sf::Texture imgbutton;
-    imgbutton.loadFromFile("demo/themed-button.png");
+    imgbutton.loadFromFile(chk::getResourcePath("themed-button.png"));
 
     gui::SpriteButton* customButton = new gui::SpriteButton(imgbutton, "Play");
     customButton->setTextSize(20);
@@ -174,11 +182,14 @@ int main()
     gui::OptionsBox<Theme>* themeBox = new gui::OptionsBox<Theme>();
     themeBox->addItem("Windows 98", win98Theme);
     themeBox->addItem("Default", defaultTheme);
-    themeBox->setCallback([&]() {
-        const Theme& theme = themeBox->getSelectedValue();
-        gui::Theme::loadTexture(theme.texturePath);
-        gui::Theme::windowBgColor = theme.backgroundColor;
-    });
+    themeBox->setCallback(
+        [&]()
+        {
+            const Theme& theme = themeBox->getSelectedValue();
+            gui::Theme::loadTexture(theme.texturePath);
+            gui::Theme::windowBgColor = theme.backgroundColor;
+        }
+    );
     vbox->add(themeBox);
 
     // Textbox
@@ -187,9 +198,7 @@ int main()
     textbox3->setText("My Button");
     textbox3->setPlaceholder("Button label");
     hbox2->add(textbox3);
-    hbox2->addButton("Create button", [&]() {
-        vbox->add(new gui::Button(textbox3->getText()));
-    });
+    hbox2->addButton("Create button", [&]() { vbox->add(new gui::Button(textbox3->getText())); });
 
     // Small progress bar
     gui::HBoxLayout* hbox3 = vbox->addHBoxLayout();
@@ -198,17 +207,13 @@ int main()
     hbox3->add(pbar);
 
     gui::Slider* vslider = new gui::Slider(100, gui::Vertical);
-    vslider->setCallback([&]() {
-        pbar->setValue(vslider->getValue());
-    });
+    vslider->setCallback([&]() { pbar->setValue(vslider->getValue()); });
     hbox->add(vslider);
 
-    menu.addButton("Quit", [&]() {
-        app.close();
-    });
+    menu.addButton("Quit", [&]() { app.close(); });
 
     sf::Texture texture;
-    texture.loadFromFile("demo/sfml.png");
+    texture.loadFromFile(chk::getResourcePath("sfml.png"));
 
     sf::Sprite sprite(texture);
     sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);

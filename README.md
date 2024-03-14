@@ -12,11 +12,47 @@ A simple GUI module for SFML.
 - Author: Alexandre Bodelot <alexandre.bodelot@gmail.com>
 - License: [MIT License](http://opensource.org/licenses/MIT) (See LICENSE file)
 
-Run `make` to build the library (`lib/libsfml-widgets.a`) and the demo program.
+## Requirements:
+- [Download SFML 2.6.x](https://www.sfml-dev.org/download.php) for your platform
+- Latest [CMake Installer](https://cmake.org/download/) - version 3.20 or higher
 
-You can then run the demo: `./sfml-widgets-demo`
+### Windows:
+- Visual Studio 2017 or later (select complete "**Desktop C++ Development**" workload)
+- CMake for Visual Studio (download using Visual Studio installer).
+  
+### MacOS
+- XCode latest with MacOS SDK.
+- Follow [official guide](https://www.sfml-dev.org/tutorials/2.6/start-osx.php) on installing SFML on MacOS
+- Extra Apple Developer Tools. After Xcode installs, run this in Terminal:
+  ```bash
+  sudo xcode-select --install
+  ```
+- After CMake GUI installs on your Mac, make sure to add its CLI to PATH:
+  ```bash
+   sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install
+  ```
 
-## Setup
+### Linux Desktop
+- Use your package manager (`apt-get` or `yum`) to download SFML dev dependencies listed [in official docs](https://www.sfml-dev.org/tutorials/2.6/compile-with-cmake.php#installing-dependencies)
+
+## Building locally
+
+- On Windows, open this project in Visual Studio 2022 or later, choose "Release" or "Debug" from top toolbar. Then click "Build" > "Build All".
+- If using CMake GUI (all platforms), set "Source Folder" to this project root. Then set "Build Folder" to new _relative_ folder `/build` or `/out`. See image below. Then click "Configure", choose **Unix Makefiles**, then click Generate. Finally, open build folder, then run `make all` in Terminal.
+
+ ![cmake_screenshot](doc/cmake_gui.png)
+ 
+- Alternatively, you can use the CMake CLI on your Terminal:
+
+```bash
+mkdir build
+cd build
+cmake . .
+cmake --build . --config Release --target all
+```
+
+
+## How to use the library
 
 1. Load resources (font, spritesheet) in static class `gui::Theme`
 2. Use `gui::Menu` to create a new sfml-widgets menu. It needs to be connected to your SFML render window, which is given to the constructor.
@@ -32,12 +68,15 @@ Minimal example:
 int main()
 {
     sf::RenderWindow app(sf::VideoMode(800, 600), "SFML Widgets", sf::Style::Close);
+     
+    //Set FPS limit
+    //app.setFramerateLimit(60);
 
     // Declare menu
     gui::Menu menu(app);
 
-    gui::Theme::loadFont("demo/tahoma.ttf");
-    gui::Theme::loadTexture("demo/texture-default.png");
+    gui::Theme::loadFont("resources/tahoma.ttf");
+    gui::Theme::loadTexture("resources/texture-default.png"); 
 
     // Create some button widget
     gui::Button* button = new gui::Button("My button");
@@ -74,11 +113,13 @@ int main()
         app.display();
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 ```
 
 `demo/demo.cpp` conains a more complex example, featuring all widgets.
+
+![demo_screenshot](doc/demo_screenshot.png)
 
 ## Widgets
 
