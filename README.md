@@ -17,8 +17,8 @@ A simple GUI module for SFML.
 - Latest [CMake Installer](https://cmake.org/download/) - version 3.20 or higher
 
 ### Windows:
-- Visual Studio 2022 or later (select complete "**Desktop C++ Development**" workload)
-- CMake for VS2022 (download using Visual Studio installer).
+- Visual Studio 2017 or later (select complete "**Desktop C++ Development**" workload)
+- CMake for Visual Studio (download using Visual Studio installer).
   
 ### MacOS
 - XCode latest with MacOS SDK.
